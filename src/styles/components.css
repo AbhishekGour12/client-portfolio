@@ -1,0 +1,263 @@
+/* WhatsApp Floating Button */
+.whatsapp-float {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 60px;
+  height: 60px;
+  background-color: #25D366;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+  z-index: 999;
+  text-decoration: none;
+  transition: var(--transition-smooth);
+}
+
+.whatsapp-float:hover {
+  transform: scale(1.1) rotate(5deg);
+  background-color: #20BA5A;
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
+}
+
+.whatsapp-icon {
+  z-index: 10;
+  display: block;
+}
+
+.whatsapp-pulse {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(37, 211, 102, 0.4);
+  border-radius: 50%;
+  z-index: 1;
+  pointer-events: none;
+  animation: whatsapp-pulse 2s infinite ease-out;
+}
+
+.pulse-2 {
+  animation-delay: 0.8s;
+}
+
+@keyframes whatsapp-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+
+/* Scroll Progress Indicator */
+.scroll-progress-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: transparent;
+  z-index: 1002;
+  pointer-events: none;
+}
+
+.scroll-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-purple), var(--color-gold));
+  width: 0%;
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+}
+
+/* Sticky Booking CTA Bar */
+.sticky-booking-cta {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(16, 27, 46, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid var(--color-border);
+  padding: 15px 10%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 998;
+  transform: translateY(100%);
+  transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+  box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.sticky-booking-cta.visible {
+  transform: translateY(0);
+}
+
+.sticky-cta-text {
+  font-family: var(--font-headings);
+  font-size: 1.3rem;
+  color: var(--text-primary);
+  letter-spacing: 0.05em;
+}
+
+.sticky-cta-text span {
+  color: var(--color-gold);
+}
+
+.sticky-cta-btn {
+  padding: 10px 24px;
+  font-size: 0.85rem;
+  animation: btn-shine 3s infinite linear;
+  background-size: 200% auto;
+}
+
+@keyframes btn-shine {
+  0% { background-position: 0% center; }
+  50% { background-position: 100% center; }
+  100% { background-position: 0% center; }
+}
+
+@media (max-width: 768px) {
+  .sticky-booking-cta {
+    padding: 15px 5%;
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+  }
+  .sticky-cta-text {
+    font-size: 1.05rem;
+  }
+  .sticky-cta-btn {
+    width: 100%;
+  }
+}
+
+/* Google Reviews Section (Hidden unless SHOW_GOOGLE_REVIEWS is true) */
+.google-reviews-section {
+  background-color: var(--bg-secondary);
+}
+
+.google-reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  margin-bottom: 50px;
+  z-index: 10;
+  position: relative;
+}
+
+.google-review-card {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.google-review-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  position: relative;
+}
+
+.google-review-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--color-border);
+}
+
+.google-review-meta h4 {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--text-primary);
+}
+
+.google-review-meta span {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.google-icon {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #4285F4;
+  font-size: 1.2rem;
+}
+
+.google-review-stars {
+  display: flex;
+  gap: 4px;
+}
+
+.star-icon {
+  color: var(--color-gold);
+  font-size: 0.9rem;
+}
+
+.star-icon.large {
+  font-size: 1.4rem;
+}
+
+.google-review-text {
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+.google-aggregate {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 600px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.google-aggregate-brand {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.google-brand-icon {
+  font-size: 2.2rem;
+  color: #4285F4;
+}
+
+.google-aggregate-stars {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 5px;
+}
+
+.stars-row {
+  display: flex;
+  gap: 4px;
+}
+
+.google-aggregate-stars span {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+@media (max-width: 600px) {
+  .google-aggregate {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .google-aggregate-stars {
+    align-items: center;
+  }
+}

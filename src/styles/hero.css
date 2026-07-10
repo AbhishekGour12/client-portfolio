@@ -1,0 +1,179 @@
+.hero-section {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-color: var(--bg-primary);
+  overflow: hidden;
+  padding: 120px 20px 80px;
+}
+
+.hero-video-fallback {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/src/assets/hero_profile_black_gown.webp');
+  background-size: cover;
+  background-position: center top;
+  opacity: 0.35;
+  filter: saturate(0.8) brightness(0.5);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.hero-gradient-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, rgba(16, 27, 46, 0.4) 0%, var(--bg-primary) 85%);
+  z-index: 2;
+}
+
+/* Floating Blobs Positioning (Static for better performance) */
+.hero-blob-1 {
+  top: 15%;
+  left: 10%;
+}
+
+.hero-blob-2 {
+  bottom: 15%;
+  right: 10%;
+}
+
+/* Hero Content Styling */
+.hero-content {
+  max-width: 900px;
+  width: 100%;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.hero-subtitle {
+  font-family: var(--font-alt);
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: var(--color-gold);
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  text-shadow: var(--glow-gold);
+}
+
+.hero-title {
+  font-size: 5.5rem;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+  margin-bottom: 5px;
+  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
+}
+
+.hero-typing-wrapper {
+  font-size: 2.2rem;
+  font-weight: 400;
+  font-family: var(--font-headings);
+  color: var(--text-primary);
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hero-typing-text {
+  color: var(--color-gold);
+  text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+  font-weight: 600;
+}
+
+.hero-typing-cursor {
+  color: var(--color-purple);
+  font-weight: 300;
+  animation: blink-cursor 0.8s infinite;
+}
+
+@keyframes blink-cursor {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.hero-description {
+  font-size: 1.15rem;
+  max-width: 600px;
+  margin: 10px 0 30px;
+  color: var(--text-secondary);
+}
+
+.hero-cta-group {
+  display: flex;
+  gap: 20px;
+}
+
+.hero-btn {
+  padding: 15px 32px;
+  font-size: 0.95rem;
+}
+
+/* Scroll Down Indicator */
+.hero-scroll-indicator {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  z-index: 10;
+  font-family: var(--font-alt);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  transition: var(--transition-fast);
+  text-decoration: none;
+}
+
+.hero-scroll-indicator:hover {
+  color: var(--color-gold);
+}
+
+.bounce-arrow {
+  font-size: 1.1rem;
+  color: var(--color-gold);
+}
+
+/* Responsiveness adjustments */
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 3.8rem;
+  }
+  .hero-typing-wrapper {
+    font-size: 1.6rem;
+    min-height: 40px;
+  }
+  .hero-description {
+    font-size: 1rem;
+  }
+  .hero-cta-group {
+    flex-direction: column;
+    width: 100%;
+    max-width: 320px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 2.8rem;
+  }
+}

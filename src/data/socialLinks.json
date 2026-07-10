@@ -1,0 +1,51 @@
+[
+  {
+    "id": "instagram",
+    "name": "Instagram",
+    "url": "https://instagram.com/anchor_anushi",
+    "iconName": "FaInstagram",
+    "username": "@anchor_anushi"
+  },
+  {
+    "id": "email",
+    "name": "Email",
+    "url": "mailto:anchoranushi@gmail.com",
+    "iconName": "FaRegEnvelope",
+    "username": "anchoranushi@gmail.com"
+  },
+  {
+    "id": "phone",
+    "name": "Phone",
+    "url": "tel:+919983456885",
+    "iconName": "FaPhoneAlt",
+    "username": "+91 99834 56885"
+  },
+  {
+    "id": "corporate-raw",
+    "name": "Corporate Showreel Folder",
+    "url": "https://shorturl.at/NfdbS",
+    "iconName": "FaFolderOpen",
+    "username": "View Raw Corporate MC Clips"
+  },
+  {
+    "id": "social-raw",
+    "name": "Social Events Folder",
+    "url": "https://shorturl.at/Hy4eS",
+    "iconName": "FaFolderOpen",
+    "username": "View Raw Sangeet & Social Clips"
+  },
+  {
+    "id": "gallery-raw",
+    "name": "Photo Gallery Folder",
+    "url": "https://shorturl.at/HebiS",
+    "iconName": "FaImages",
+    "username": "View Full Cloud Photo Archive"
+  },
+  {
+    "id": "whatsapp-chat",
+    "name": "WhatsApp Direct Link",
+    "url": "https://shorturl.at/f2ctm",
+    "iconName": "FaWhatsapp",
+    "username": "Chat directly on WhatsApp"
+  }
+]

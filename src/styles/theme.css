@@ -1,0 +1,36 @@
+:root {
+  /* Color Palette */
+  --bg-primary: #08111F;
+  --bg-secondary: #101B2E;
+  --color-gold: #D4AF37;
+  --color-gold-hover: #F3E5AB;
+  --color-purple: #6D4AFF;
+  --color-purple-hover: #8C6AFF;
+  --text-primary: #FFFFFF;
+  --text-secondary: #C9D1D9;
+  --color-success: #10B981;
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-border-glow: rgba(212, 175, 55, 0.2);
+
+  /* Fonts */
+  --font-headings: 'Playfair Display', serif;
+  --font-body: 'Poppins', sans-serif;
+  --font-alt: 'Manrope', sans-serif;
+
+  /* Gradients */
+  --gradient-gold: linear-gradient(135deg, #D4AF37 0%, #AA7C11 100%);
+  --gradient-gold-glow: linear-gradient(135deg, #F3E5AB 0%, #D4AF37 100%);
+  --gradient-purple-gold: linear-gradient(135deg, #6D4AFF 0%, #D4AF37 100%);
+  --gradient-dark-overlay: linear-gradient(180deg, rgba(8, 17, 31, 0.4) 0%, #08111F 100%);
+  --gradient-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+
+  /* Shadows and Glows */
+  --glow-gold: 0 0 20px rgba(212, 175, 55, 0.35);
+  --glow-purple: 0 0 25px rgba(109, 74, 255, 0.4);
+  --glow-combined: 0 8px 32px 0 rgba(109, 74, 255, 0.15), 0 0 15px rgba(212, 175, 55, 0.1);
+  --shadow-glass: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+
+  /* Animations & Transitions */
+  --transition-smooth: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  --transition-fast: all 0.2s ease;
+}

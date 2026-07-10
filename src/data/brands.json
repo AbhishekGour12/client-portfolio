@@ -1,0 +1,12 @@
+[
+  { "id": "brand-airtel", "name": "Airtel", "image": "/src/assets/logos/brand-airtel.svg" },
+  { "id": "brand-hyatt", "name": "Hyatt Regency", "image": "/src/assets/logos/brand-hyatt.svg" },
+  { "id": "brand-msme", "name": "Ministry of MSME", "image": "/src/assets/logos/brand-msme.svg" },
+  { "id": "brand-radisson", "name": "Radisson Hotels", "image": "/src/assets/logos/brand-radisson.svg" },
+  { "id": "brand-bni", "name": "BNI India", "image": "/src/assets/logos/brand-bni.svg" },
+  { "id": "brand-amity", "name": "Amity University", "image": "/src/assets/logos/brand-amity.svg" },
+  { "id": "brand-marriott", "name": "Marriott Hotels", "image": "/src/assets/logos/brand-marriott.svg" },
+  { "id": "brand-cornitos", "name": "Cornitos", "image": "/src/assets/logos/brand-cornitos.svg" },
+  { "id": "brand-vlcc", "name": "VLCC", "image": "/src/assets/logos/brand-vlcc.svg" },
+  { "id": "brand-gail", "name": "GAIL", "image": "/src/assets/logos/brand-gail.svg" }
+]

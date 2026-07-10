@@ -1,0 +1,72 @@
+[
+  {
+    "id": "corporate-events",
+    "title": "Corporate Events & Conferences",
+    "shortDesc": "Hosting corporate summits, business conferences, and executive forums with professional polish.",
+    "longDesc": "Representing corporate brands with class, maintaining tight schedules, and facilitating professional panels and guest introductions. Trusted by brands like Airtel, BNI, and Hyatt Regency.",
+    "iconName": "FaBuilding"
+  },
+  {
+    "id": "weddings",
+    "title": "Weddings & Social Celebrations",
+    "shortDesc": "Conducting luxury weddings, family assemblies, and high-society receptions.",
+    "longDesc": "Combining warmth, emotional storytelling, and engaging family introductions to make your special day absolute royalty.",
+    "iconName": "FaCrown"
+  },
+  {
+    "id": "agms",
+    "title": "Annual General Meetings & Dealer Meets",
+    "shortDesc": "Anchoring high-stakes AGMs and business dealer forums.",
+    "longDesc": "Commanding the stage for crucial executive gatherings, managing corporate protocol, and communicating institutional agendas clearly.",
+    "iconName": "FaBriefcase"
+  },
+  {
+    "id": "brand-launches",
+    "title": "Brand Launches & Product Promotions",
+    "shortDesc": "Creating suspense and buzz for product reveals and promotional rollouts.",
+    "longDesc": "Working alongside visual displays and launch cues to capture press and consumer attention for new market launches.",
+    "iconName": "FaRocket"
+  },
+  {
+    "id": "sangeet",
+    "title": "Engagements, Sangeet & Receptions",
+    "shortDesc": "High-energy hosting for sangeet dance nights, engagements, and receptions.",
+    "longDesc": "Keeping the energy electric with family banter, dance integrations, and concert-like stage presence.",
+    "iconName": "FaMusic"
+  },
+  {
+    "id": "festive-cultural",
+    "title": "Festive & Cultural Events",
+    "shortDesc": "Anchoring major regional festivals, cultural showcases, and heritage celebrations.",
+    "longDesc": "Adapting dynamically to navratri, diwali, or regional festivals with appropriate language and cultural context.",
+    "iconName": "FaMapMarkedAlt"
+  },
+  {
+    "id": "open-mics",
+    "title": "Open Mics, Poetry & Literary Shows",
+    "shortDesc": "Sophisticated hosting for poetry recitals, open mics, and literary events.",
+    "longDesc": "Fostering creative environments and articulating poetic introductions for artists, writers, and speakers.",
+    "iconName": "FaFeatherAlt"
+  },
+  {
+    "id": "entertainment-nights",
+    "title": "Entertainment & Musical Nights",
+    "shortDesc": "Opening live music concerts, stand-up nights, and high-tempo shows.",
+    "longDesc": "Hyping crowds, managing concert transitions, and sharing stage dynamics with vocalists and performers.",
+    "iconName": "FaMicrophone"
+  },
+  {
+    "id": "award-ceremonies",
+    "title": "Award Ceremonies & Felicitations",
+    "shortDesc": "Refined MC work for prestigious awards nights and corporate felicitations.",
+    "longDesc": "Managing prize protocols, guest presenters, and dramatic pauses with poise and honor.",
+    "iconName": "FaTrophy"
+  },
+  {
+    "id": "youth-fests",
+    "title": "Youth Fests & College Events",
+    "shortDesc": "High-octane hosting and crowd control for college fests and youth concerts.",
+    "longDesc": "Matching the youth vibe, handling large student audiences, and leading interactive college fests with supreme energy.",
+    "iconName": "FaUsers"
+  }
+]

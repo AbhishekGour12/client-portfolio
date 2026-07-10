@@ -1,0 +1,103 @@
+.testimonials-section {
+  background-color: var(--bg-primary);
+  position: relative;
+}
+
+.testimonials-blob {
+  top: 10%;
+  left: -5%;
+  opacity: 0.08;
+}
+
+.testimonials-container {
+  max-width: 1000px;
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+  z-index: 10;
+}
+
+.testimonials-swiper {
+  padding-bottom: 60px !important;
+}
+
+.testimonial-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 40px;
+  justify-content: space-between;
+}
+
+.quote-icon {
+  font-size: 2.2rem;
+  color: var(--color-purple);
+  opacity: 0.25;
+  margin-bottom: 5px;
+}
+
+.testimonial-text {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  font-style: italic;
+  margin-bottom: 20px;
+}
+
+.testimonial-rating {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 25px;
+}
+
+.testimonial-client {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  border-top: 1px solid var(--color-border);
+  padding-top: 20px;
+  margin-top: auto;
+}
+
+.client-avatar {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--color-border);
+}
+
+.client-meta h4 {
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.client-meta span {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+/* Swiper Pagination Styling Customization */
+.testimonials-swiper .swiper-pagination-bullet {
+  background: var(--text-secondary) !important;
+  opacity: 0.3;
+  width: 8px;
+  height: 8px;
+  transition: var(--transition-fast);
+}
+
+.testimonials-swiper .swiper-pagination-bullet-active {
+  background: var(--color-gold) !important;
+  opacity: 1 !important;
+  width: 25px !important;
+  border-radius: 4px;
+}
+
+@media (max-width: 768px) {
+  .testimonial-card {
+    padding: 30px 20px;
+  }
+}

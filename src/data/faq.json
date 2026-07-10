@@ -1,0 +1,22 @@
+[
+  {
+    "id": "faq-booking",
+    "question": "How do I book Anchor Anushi for an event?",
+    "answer": "You can reserve a date by filling out the booking form below or sending an email to anchoranushi@gmail.com with event details such as date, location, and nature of the show. We will respond with availability within 24 hours."
+  },
+  {
+    "id": "faq-travel",
+    "question": "Is she available for events outside her home city?",
+    "answer": "Yes, Anushi travels globally. She has hosted events across various Indian states and international corporate summits in Dubai. Travel and luxury accommodation are covered by the client as per booking terms."
+  },
+  {
+    "id": "faq-languages",
+    "question": "What languages does she anchor in?",
+    "answer": "Anushi anchors fluently in English and Hindi, easily switching between the two to engage diverse and regional audiences."
+  },
+  {
+    "id": "faq-services",
+    "question": "Does she assist in scripting and rehearsals?",
+    "answer": "Yes, for corporate conferences, dealer meets, and product launches, Anushi coordinates with event organizers and directors during dress rehearsals to align cue timings and script adjustments."
+  }
+]
