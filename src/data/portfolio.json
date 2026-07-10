@@ -3,42 +3,42 @@
     "id": 1,
     "title": "Corporate Gala Interaction",
     "category": "Corporate",
-    "image": "/src/assets/gallery_corporate_gala.webp",
+    "image": "/assets/gallery_corporate_gala.webp",
     "description": "Engaging the audience on stage during a premium corporate celebration evening."
   },
   {
     "id": 2,
     "title": "Interactive Youth Stage Session",
     "category": "Celebrity",
-    "image": "/src/assets/gallery_youth_stage.webp",
+    "image": "/assets/gallery_youth_stage.webp",
     "description": "Anchoring a high-energy talent round and co-hosting alongside child performers."
   },
   {
     "id": 3,
     "title": "Luxury Saree Sangeet Theme",
     "category": "Wedding",
-    "image": "/src/assets/gallery_traditional_sangeet.webp",
+    "image": "/assets/gallery_traditional_sangeet.webp",
     "description": "Anchored an elegant traditional sangeet night showcasing cultural family walkups."
   },
   {
     "id": 4,
     "title": "Grand Reception Opening Celebration",
     "category": "Wedding",
-    "image": "/src/assets/gallery_reception_opening.webp",
+    "image": "/assets/gallery_reception_opening.webp",
     "description": "Coordinating stage flows and introducing newlyweds to a palace crowd of 800+ guests."
   },
   {
     "id": 5,
     "title": "Annual Dealer Meet Anchoring",
     "category": "Corporate",
-    "image": "/src/assets/gallery_dealer_meet.webp",
+    "image": "/assets/gallery_dealer_meet.webp",
     "description": "Hosting the corporate recognition meet and facilitating brand executive announcements."
   },
   {
     "id": 6,
     "title": "Award Felicitations Master of Ceremonies",
     "category": "Award Shows",
-    "image": "/src/assets/gallery_awards_MC.webp",
+    "image": "/assets/gallery_awards_MC.webp",
     "description": "MC-ing the red carpet and main stage awards presentation for elite delegates."
   }
 ]

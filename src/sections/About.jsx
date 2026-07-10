@@ -85,7 +85,7 @@ const About = () => {
         >
           <div className="about-image-wrapper">
             <img
-              src="/src/assets/about_profile_laptop.webp"
+              src="/assets/about_profile_laptop.webp"
               alt="Anushi Kothari Anchor"
               className="about-image"
               loading="lazy"

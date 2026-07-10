@@ -16,7 +16,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url('/src/assets/hero_profile_black_gown.webp');
+  background-image: url('/assets/hero_profile_black_gown.webp');
   background-size: cover;
   background-position: center top;
   opacity: 0.35;
