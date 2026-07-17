@@ -3,9 +3,6 @@ import { brandsData } from '../data/brands';
 import '../styles/brands.css';
 
 const Brands = () => {
-  // Tripling the brands array ensures seamless infinite scrolling loop
-  const marqueeItems = [...brandsData, ...brandsData, ...brandsData];
-
   return (
     <section className="brands-marquee-section">
       <div className="brands-title-container">
@@ -15,15 +12,32 @@ const Brands = () => {
 
       <div className="marquee-container">
         <div className="marquee-content">
-          {marqueeItems.map((brand, index) => (
-            <div key={`${brand.id}-${index}`} className="brand-logo-item clickable">
+          {brandsData.map((brand, index) => (
+            <div key={`${brand.id}-1-${index}`} className="brand-logo-item clickable">
               {brand.image && (
                 <img 
                   src={brand.image} 
                   alt={`${brand.name} logo`} 
                   className="brand-logo-img" 
                   onError={(e) => {
-                    // Fallback to hide image if it fails to load
+                    e.target.style.display = 'none';
+                  }}
+                />
+              )}
+              <span className="brand-logo-name">{brand.name}</span>
+            </div>
+          ))}
+        </div>
+
+        <div className="marquee-content" aria-hidden="true">
+          {brandsData.map((brand, index) => (
+            <div key={`${brand.id}-2-${index}`} className="brand-logo-item clickable">
+              {brand.image && (
+                <img 
+                  src={brand.image} 
+                  alt={`${brand.name} logo`} 
+                  className="brand-logo-img" 
+                  onError={(e) => {
                     e.target.style.display = 'none';
                   }}
                 />

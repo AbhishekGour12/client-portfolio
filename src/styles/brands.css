@@ -29,6 +29,8 @@
   font-size: 1.3rem;
   font-weight: 500;
   color: var(--text-secondary);
+}
+
 .brand-logo-item {
   display: flex;
   align-items: center;
@@ -48,12 +50,12 @@
   height: 48px; /* larger logo size */
   max-width: 140px;
   object-fit: contain;
-  filter: grayscale(1) brightness(1.7) contrast(1.2); /* matches clean luxury dark mode */
+  filter: none; /* original colors directly */
   transition: all 0.4s ease;
 }
 
 .brand-logo-item:hover .brand-logo-img {
-  filter: grayscale(0) brightness(1.1) contrast(1.1); /* original colors on hover */
+  filter: none;
 }
 
 .brand-logo-name {

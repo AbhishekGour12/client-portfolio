@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { navigationLinks } from '../data/navigation';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import '../styles/navbar.css';
@@ -7,6 +8,8 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const handleScrollNavbar = () => {
@@ -47,20 +50,45 @@ const Navbar = () => {
     };
   }, []);
 
+  // Set active section when visiting contact or blog page
+  useEffect(() => {
+    if (location.pathname === '/contact') {
+      setActiveSection('contact');
+    } else if (location.pathname === '/blog') {
+      setActiveSection('blog');
+    }
+  }, [location.pathname]);
+
   const handleNavClick = (e, targetId) => {
     e.preventDefault();
     setIsMobileMenuOpen(false);
     
-    const element = document.getElementById(targetId);
-    if (element) {
-      const navbarHeight = 80;
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.scrollY - navbarHeight;
-      
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
+    if (targetId === 'contact') {
+      navigate('/contact');
+      window.scrollTo(0, 0);
+      return;
+    }
+
+    if (targetId === 'blog') {
+      navigate('/blog');
+      window.scrollTo(0, 0);
+      return;
+    }
+
+    if (location.pathname !== '/') {
+      navigate(`/#${targetId}`);
+    } else {
+      const element = document.getElementById(targetId);
+      if (element) {
+        const navbarHeight = 80;
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.scrollY - navbarHeight;
+        
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      }
     }
   };
 

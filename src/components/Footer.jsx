@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { footerLinks } from '../data/navigation';
 import { socialLinksData } from '../data/socialLinks';
 import { 
@@ -8,7 +9,10 @@ import {
   FaFacebookF, 
   FaRegEnvelope, 
   FaPhoneAlt, 
-  FaArrowUp 
+  FaArrowUp,
+  FaWhatsapp,
+  FaFolderOpen,
+  FaImages
 } from 'react-icons/fa';
 import '../styles/footer.css';
 
@@ -19,10 +23,16 @@ const FaIcons = {
   FaFacebookF,
   FaRegEnvelope,
   FaPhoneAlt,
-  FaArrowUp
+  FaArrowUp,
+  FaWhatsapp,
+  FaFolderOpen,
+  FaImages
 };
 
 const Footer = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const getIcon = (iconName) => {
     const Icon = FaIcons[iconName];
     return Icon ? <Icon /> : null;
@@ -30,23 +40,39 @@ const Footer = () => {
 
   const handleScrollToTop = (e) => {
     e.preventDefault();
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
+    if (location.pathname !== '/') {
+      navigate('/');
+      window.scrollTo(0, 0);
+    } else {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
   };
 
   const handleNavClick = (e, targetId) => {
     e.preventDefault();
-    const element = document.getElementById(targetId);
-    if (element) {
-      const navbarHeight = 80;
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.scrollY - navbarHeight;
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
+    
+    if (targetId === 'contact') {
+      navigate('/contact');
+      window.scrollTo(0, 0);
+      return;
+    }
+
+    if (location.pathname !== '/') {
+      navigate(`/#${targetId}`);
+    } else {
+      const element = document.getElementById(targetId);
+      if (element) {
+        const navbarHeight = 80;
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.scrollY - navbarHeight;
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      }
     }
   };
 
@@ -65,8 +91,8 @@ const Footer = () => {
             </p>
             <div className="footer-socials">
               {socialLinksData.map((social) => {
-                // Ignore email and phone for the generic social icon circle list, focus on social media
-                if (social.id === 'email' || social.id === 'phone') return null;
+                // Ignore email, phone, and raw folder links for the generic social icon circle list
+                if (social.id === 'email' || social.id === 'phone' || social.id.includes('raw')) return null;
                 return (
                   <a
                     key={social.id}

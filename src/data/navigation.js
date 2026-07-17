@@ -1,11 +1,9 @@
 export const navigationLinks = [
   { label: 'Home', targetId: 'home' },
   { label: 'About', targetId: 'about' },
-  { label: 'Services', targetId: 'services' },
   { label: 'Portfolio', targetId: 'portfolio' },
-  { label: 'Showreel', targetId: 'showreel' },
-  { label: 'Testimonials', targetId: 'testimonials' },
-  { label: 'FAQ', targetId: 'faq' },
+  { label: 'Services', targetId: 'services' },
+  { label: 'Blog', targetId: 'blog' },
   { label: 'Contact', targetId: 'contact' },
 ];
 

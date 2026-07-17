@@ -1,72 +1,110 @@
 [
   {
-    "id": "corporate-events",
-    "title": "Corporate Events & Conferences",
-    "shortDesc": "Hosting corporate summits, business conferences, and executive forums with professional polish.",
-    "longDesc": "Representing corporate brands with class, maintaining tight schedules, and facilitating professional panels and guest introductions. Trusted by brands like Airtel, BNI, and Hyatt Regency.",
-    "iconName": "FaBuilding"
+    "id": "corporate-conferences",
+    "title": "Corporate Conferences & Leadership Summits",
+    "shortDesc": "For rooms where conversations shape decisions.",
+    "longDesc": "Hosting conferences, industry summits, leadership forums, panel discussions and executive gatherings with professionalism, precision and audience engagement.",
+    "whyChoose": [
+      "Executive presence with senior leadership and CXOs",
+      "Seamless moderation of panels and discussions",
+      "Time-sensitive agenda management",
+      "Professional handling of VIP guests and dignitaries",
+      "Audience engagement without compromising decorum"
+    ],
+    "highlightsLabel": "Worked with:",
+    "highlights": "Employers Association of Rajasthan (HR Conclave), GAIL India, Airtel, CK Birla Group and multiple corporate forums.",
+    "iconName": "FaBuilding",
+    "gradient": "linear-gradient(135deg, #D4AF37 0%, #AA7C11 100%)",
+    "hoverGlow": "rgba(212, 175, 55, 0.2)"
   },
   {
-    "id": "weddings",
-    "title": "Weddings & Social Celebrations",
-    "shortDesc": "Conducting luxury weddings, family assemblies, and high-society receptions.",
-    "longDesc": "Combining warmth, emotional storytelling, and engaging family introductions to make your special day absolute royalty.",
-    "iconName": "FaCrown"
-  },
-  {
-    "id": "agms",
+    "id": "agms-dealer-meets",
     "title": "Annual General Meetings & Dealer Meets",
-    "shortDesc": "Anchoring high-stakes AGMs and business dealer forums.",
-    "longDesc": "Commanding the stage for crucial executive gatherings, managing corporate protocol, and communicating institutional agendas clearly.",
-    "iconName": "FaBriefcase"
+    "shortDesc": "Where numbers meet narratives.",
+    "longDesc": "Managing formal business gatherings, dealer meets, channel partner events and institutional communication with clarity and confidence.",
+    "whyChoose": [
+      "Comfortable with structured corporate formats",
+      "Clear communication of key business messages",
+      "Maintaining energy during long-format events",
+      "Smooth coordination with management and AV teams",
+      "Professional protocol management"
+    ],
+    "highlightsLabel": "Ideal for:",
+    "highlights": "AGMs, dealer conferences, townhalls, partner meets and annual business reviews.",
+    "iconName": "FaBriefcase",
+    "gradient": "linear-gradient(135deg, #101B2E 0%, #6D4AFF 100%)",
+    "hoverGlow": "rgba(109, 74, 255, 0.2)"
   },
   {
     "id": "brand-launches",
-    "title": "Brand Launches & Product Promotions",
-    "shortDesc": "Creating suspense and buzz for product reveals and promotional rollouts.",
-    "longDesc": "Working alongside visual displays and launch cues to capture press and consumer attention for new market launches.",
-    "iconName": "FaRocket"
+    "title": "Brand Launches & Experiential Events",
+    "shortDesc": "Turning product reveals into memorable moments.",
+    "longDesc": "Creating excitement, anticipation and audience interaction for launches, activations and experiential campaigns.",
+    "whyChoose": [
+      "Brand-aligned scripting and messaging",
+      "Building anticipation before reveals",
+      "Audience participation and engagement",
+      "Maintaining event momentum",
+      "Adaptable tone based on brand personality"
+    ],
+    "highlightsLabel": "Worked with:",
+    "highlights": "VLCC, Almond Board of California, Cipla, KitKat and Nescafé.",
+    "iconName": "FaRocket",
+    "gradient": "linear-gradient(135deg, #6D4AFF 0%, #D4AF37 100%)",
+    "hoverGlow": "rgba(109, 74, 255, 0.2)"
   },
   {
-    "id": "sangeet",
-    "title": "Engagements, Sangeet & Receptions",
-    "shortDesc": "High-energy hosting for sangeet dance nights, engagements, and receptions.",
-    "longDesc": "Keeping the energy electric with family banter, dance integrations, and concert-like stage presence.",
-    "iconName": "FaMusic"
-  },
-  {
-    "id": "festive-cultural",
-    "title": "Festive & Cultural Events",
-    "shortDesc": "Anchoring major regional festivals, cultural showcases, and heritage celebrations.",
-    "longDesc": "Adapting dynamically to navratri, diwali, or regional festivals with appropriate language and cultural context.",
-    "iconName": "FaMapMarkedAlt"
-  },
-  {
-    "id": "open-mics",
-    "title": "Open Mics, Poetry & Literary Shows",
-    "shortDesc": "Sophisticated hosting for poetry recitals, open mics, and literary events.",
-    "longDesc": "Fostering creative environments and articulating poetic introductions for artists, writers, and speakers.",
-    "iconName": "FaFeatherAlt"
-  },
-  {
-    "id": "entertainment-nights",
-    "title": "Entertainment & Musical Nights",
-    "shortDesc": "Opening live music concerts, stand-up nights, and high-tempo shows.",
-    "longDesc": "Hyping crowds, managing concert transitions, and sharing stage dynamics with vocalists and performers.",
-    "iconName": "FaMicrophone"
+    "id": "weddings-celebrations",
+    "title": "Weddings & Celebrations",
+    "shortDesc": "Because celebrations deserve a voice of their own.",
+    "longDesc": "Blending warmth, humour and storytelling to create unforgettable moments for families and guests alike.",
+    "whyChoose": [
+      "Personalized family introductions",
+      "Interactive games and audience moments",
+      "Emotional storytelling for ceremonies",
+      "Seamless coordination with DJs and planners",
+      "Energy that evolves through every celebration"
+    ],
+    "highlightsLabel": "Perfect for:",
+    "highlights": "Destination weddings, sangeet nights, engagements, receptions and family celebrations.",
+    "iconName": "FaCrown",
+    "gradient": "linear-gradient(135deg, #F3E5AB 0%, #D4AF37 100%)",
+    "hoverGlow": "rgba(212, 175, 55, 0.2)"
   },
   {
     "id": "award-ceremonies",
     "title": "Award Ceremonies & Felicitations",
-    "shortDesc": "Refined MC work for prestigious awards nights and corporate felicitations.",
-    "longDesc": "Managing prize protocols, guest presenters, and dramatic pauses with poise and honor.",
-    "iconName": "FaTrophy"
+    "shortDesc": "Celebrating excellence with elegance.",
+    "longDesc": "Bringing gravitas, excitement and seamless stage flow to recognition events and award nights.",
+    "whyChoose": [
+      "Elegant stage presence",
+      "High-energy winner announcements",
+      "Dignitary and chief guest management",
+      "Smooth transitions and pacing",
+      "Premium event experience"
+    ],
+    "highlightsLabel": "Experience includes:",
+    "highlights": "MSME events, Soft Hockey League and sharing the stage with Rajasthan Deputy Chief Minister Diya Kumari ji.",
+    "iconName": "FaTrophy",
+    "gradient": "linear-gradient(135deg, #D4AF37 0%, #8C6AFF 100%)",
+    "hoverGlow": "rgba(140, 106, 255, 0.2)"
   },
   {
-    "id": "youth-fests",
-    "title": "Youth Fests & College Events",
-    "shortDesc": "High-octane hosting and crowd control for college fests and youth concerts.",
-    "longDesc": "Matching the youth vibe, handling large student audiences, and leading interactive college fests with supreme energy.",
-    "iconName": "FaUsers"
+    "id": "open-mics-cultural",
+    "title": "Open Mics, Cultural & Youth Events",
+    "shortDesc": "Where creativity meets crowd energy.",
+    "longDesc": "Hosting performances, festivals and youth experiences with spontaneity, humour and high audience engagement.",
+    "whyChoose": [
+      "Natural crowd connection",
+      "Improvisation and audience interaction",
+      "High-energy stage management",
+      "Comfortable with artists and performers",
+      "Youth-centric communication style"
+    ],
+    "highlightsLabel": "Worked with:",
+    "highlights": "Started with City Bhaskar Open Mics and later became the official host for City Bhaskar Open Mic properties in Jaipur.",
+    "iconName": "FaUsers",
+    "gradient": "linear-gradient(135deg, #8C6AFF 0%, #F3E5AB 100%)",
+    "hoverGlow": "rgba(140, 106, 255, 0.2)"
   }
 ]

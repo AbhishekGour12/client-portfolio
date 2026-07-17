@@ -9,7 +9,10 @@ import {
   FaRegEnvelope, 
   FaPhoneAlt,
   FaCheckCircle, 
-  FaSpinner 
+  FaSpinner,
+  FaWhatsapp,
+  FaFolderOpen,
+  FaImages
 } from 'react-icons/fa';
 import '../styles/contact.css';
 
@@ -21,7 +24,10 @@ const FaIcons = {
   FaYoutube,
   FaFacebookF,
   FaCheckCircle,
-  FaSpinner
+  FaSpinner,
+  FaWhatsapp,
+  FaFolderOpen,
+  FaImages
 };
 
 const Contact = () => {
@@ -66,7 +72,7 @@ const Contact = () => {
       newErrors.user_email = 'Invalid email address';
     }
     if (!formData.user_phone.trim()) newErrors.user_phone = 'Phone number is required';
-    if (!formData.event_type) newErrors.event_type = 'Please select an event type';
+    if (!formData.event_type) newErrors.event_type = 'Please select an event category';
     if (!formData.event_date) newErrors.event_date = 'Please pick a date';
     if (!formData.event_location.trim()) newErrors.event_location = 'Event location is required';
     if (!formData.event_budget) newErrors.event_budget = 'Please specify a budget range';
@@ -138,7 +144,7 @@ const Contact = () => {
     } catch (err) {
       console.error('Error submitting form:', err);
       setIsSubmitting(false);
-      setApiError(err.message || 'Failed to send mail. Please contact directly at info@anushikothari.com');
+      setApiError(err.message || 'Failed to send mail. Please contact directly at anchoranushi@gmail.com');
     }
   };
 
@@ -165,6 +171,12 @@ const Contact = () => {
           <p className="contact-panel-desc">
             Partner with a celebrity emcee who transforms events into spectacles. Complete this booking form to check calendar availability, negotiate travel logistics, and receive a customized hosting proposal.
           </p>
+
+          <div className="contact-quote">
+            <p className="quote-text">
+              “Some people speak on stage. Others make the stage speak to the audience.”
+            </p>
+          </div>
 
           <div className="contact-methods">
             {socialLinksData.map((social) => (
@@ -250,17 +262,15 @@ const Contact = () => {
                   value={formData.event_type}
                   onChange={handleInputChange}
                 >
-                  <option value="">Select Event Type</option>
-                  <option value="Corporate Event">Corporate Summit / Gala</option>
-                  <option value="Award Show">Award Show / Concert</option>
-                  <option value="Product Launch">Product Launch</option>
-                  <option value="Luxury Wedding">Luxury Sangeet / Wedding</option>
-                  <option value="Destination Wedding">Destination Weddingmc</option>
-                  <option value="Brand Promotion">Brand Promotion / MC</option>
-                  <option value="Celebrity Event">Celebrity Talk / Press Meet</option>
-                  <option value="College Festival">College Fest / Concert</option>
-                  <option value="Private Event">Private VIP Party</option>
-                  <option value="Other">Other Occasion</option>
+                  <option value="">Select Event Category</option>
+                  <option value="Corporate Conferences & Summits">Corporate Conferences & Summits</option>
+                  <option value="Annual General Meetings & Dealer Meets">Annual General Meetings & Dealer Meets</option>
+                  <option value="Brand Launches & Activations">Brand Launches & Activations</option>
+                  <option value="Award Ceremonies & Felicitations">Award Ceremonies & Felicitations</option>
+                  <option value="Weddings & Celebrations">Weddings & Celebrations</option>
+                  <option value="Cultural & Youth Events">Cultural & Youth Events</option>
+                  <option value="Private & VIP Events">Private & VIP Events</option>
+                  <option value="Other">Other</option>
                 </select>
                 {errors.event_type && <span className="form-error">{errors.event_type}</span>}
               </div>
@@ -296,7 +306,7 @@ const Contact = () => {
             </div>
 
             <div className="form-group">
-              <label className="form-label" htmlFor="event_budget">Expected Budget Scale</label>
+              <label className="form-label" htmlFor="event_budget">Expected Budget / Price Range</label>
               <select
                 id="event_budget"
                 name="event_budget"
@@ -305,10 +315,11 @@ const Contact = () => {
                 onChange={handleInputChange}
               >
                 <option value="">Select Budget Range</option>
-                <option value="Under ₹1.5 Lakh">Under ₹1.5 Lakh</option>
-                <option value="₹1.5 Lakh - ₹3 Lakhs">₹1.5 Lakh - ₹3 Lakhs</option>
-                <option value="₹3 Lakhs - ₹5 Lakhs">₹3 Lakhs - ₹5 Lakhs</option>
-                <option value="₹5 Lakhs+">₹5 Lakhs+ (Premium/International)</option>
+                <option value="Prefer to Discuss">Prefer to Discuss</option>
+                <option value="Under ₹50,000">Under ₹50,000</option>
+                <option value="₹50,000 – ₹1 Lakh">₹50,000 – ₹1 Lakh</option>
+                <option value="₹1 Lakh – ₹2 Lakhs">₹1 Lakh – ₹2 Lakhs</option>
+                <option value="₹2 Lakhs+">₹2 Lakhs+</option>
               </select>
               {errors.event_budget && <span className="form-error">{errors.event_budget}</span>}
             </div>
@@ -358,8 +369,31 @@ const Contact = () => {
             </button>
           </form>
         </motion.div>
-
       </div>
+
+      {/* Google Map Section */}
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.15 }}
+        transition={{ duration: 0.8, delay: 0.2 }}
+        className="contact-map-wrapper"
+      >
+        <h3 className="map-title">Locate Anchor Anushi</h3>
+        <div className="contact-map-container glass-card">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3770.799078788484!2d72.827376!3d19.0759837!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c6306644edc1%3A0x5da4ed8f8d648c69!2sMumbai%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
+            width="100%"
+            height="400"
+            style={{ border: 0 }}
+            allowFullScreen=""
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            title="Anchor Anushi Location Map"
+          ></iframe>
+        </div>
+      </motion.div>
+
 
       {/* Success Animation Modal */}
       <AnimatePresence>

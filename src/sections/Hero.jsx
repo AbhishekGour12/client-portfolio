@@ -14,7 +14,7 @@ const Hero = () => {
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [currentText, setCurrentText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
-  const [typingSpeed, setTypingSpeed] = useState(150);
+  const [typingSpeed, setTypingSpeed] = useState(100);
 
   useEffect(() => {
     let timer;
@@ -22,15 +22,15 @@ const Hero = () => {
       const fullWord = typingWords[currentWordIndex];
       if (!isDeleting) {
         setCurrentText(fullWord.substring(0, currentText.length + 1));
-        setTypingSpeed(100);
+        setTypingSpeed(50);
 
         if (currentText === fullWord) {
-          timer = setTimeout(() => setIsDeleting(true), 1500); // Wait at complete word
+          timer = setTimeout(() => setIsDeleting(true), 700); // Faster pause on complete word
           return;
         }
       } else {
         setCurrentText(fullWord.substring(0, currentText.length - 1));
-        setTypingSpeed(50);
+        setTypingSpeed(25);
 
         if (currentText === '') {
           setIsDeleting(false);
@@ -111,9 +111,8 @@ const Hero = () => {
           transition={{ duration: 0.8, delay: 0.7 }}
           className="hero-description"
         >
-          Creating unforgettable premium experiences through world-class stage presence, sharp timing, and charismatic event hosting.
+         Your Voice For Every Ocassion
         </motion.p>
-
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}

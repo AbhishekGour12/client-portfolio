@@ -2,21 +2,51 @@
   {
     "id": "faq-booking",
     "question": "How do I book Anchor Anushi for an event?",
-    "answer": "You can reserve a date by filling out the booking form below or sending an email to anchoranushi@gmail.com with event details such as date, location, and nature of the show. We will respond with availability within 24 hours."
+    "answer": "Simply reach out through the contact form, WhatsApp, email or Instagram with your event details including date, city, event type and audience size. Availability and a customized proposal are usually shared within 24 hours."
   },
   {
     "id": "faq-travel",
-    "question": "Is she available for events outside her home city?",
-    "answer": "Yes, Anushi travels globally. She has hosted events across various Indian states and international corporate summits in Dubai. Travel and luxury accommodation are covered by the client as per booking terms."
+    "question": "Is Anchor Anushi available for events outside Mumbai?",
+    "answer": "Yes. Anushi regularly hosts events across Mumbai, Jaipur and cities across India, and is available for destination weddings and international assignments as well."
   },
   {
     "id": "faq-languages",
     "question": "What languages does she anchor in?",
-    "answer": "Anushi anchors fluently in English and Hindi, easily switching between the two to engage diverse and regional audiences."
+    "answer": "Anushi hosts comfortably in English and Hindi and can switch seamlessly between languages depending on the audience and event format."
   },
   {
-    "id": "faq-services",
-    "question": "Does she assist in scripting and rehearsals?",
-    "answer": "Yes, for corporate conferences, dealer meets, and product launches, Anushi coordinates with event organizers and directors during dress rehearsals to align cue timings and script adjustments."
+    "id": "faq-scripting",
+    "question": "Does she assist with scripting and event flow planning?",
+    "answer": "Absolutely. From stage scripts and speaker introductions to audience engagement activities and run-of-show planning, Anushi collaborates closely with organizers to ensure a smooth event experience."
+  },
+  {
+    "id": "faq-specialties",
+    "question": "What types of events does she specialize in?",
+    "answer": "Her expertise spans corporate conferences, leadership summits, AGMs, dealer meets, brand launches, luxury weddings, sangeet nights, award ceremonies and cultural events."
+  },
+  {
+    "id": "faq-advance",
+    "question": "How far in advance should I make a booking?",
+    "answer": "Popular dates, especially wedding season weekends and quarter-end corporate dates, tend to get booked early. Booking 1–3 months in advance is recommended."
+  },
+  {
+    "id": "faq-customization",
+    "question": "Can she customize the hosting style for our audience?",
+    "answer": "Yes. Every event has its own personality. The hosting style, energy level, language and audience interaction are tailored to match your event goals and audience profile."
+  },
+  {
+    "id": "faq-coordination",
+    "question": "Does she coordinate with event planners and vendors?",
+    "answer": "Yes. Anushi works closely with planners, AV teams, DJs, production teams and venue staff to ensure smooth stage management and transitions."
+  },
+  {
+    "id": "faq-versatility",
+    "question": "Can she host both formal and high-energy events?",
+    "answer": "Yes. One of her strengths is moving effortlessly between boardroom conversations and dance floor celebrations while maintaining the right tone for each occasion."
+  },
+  {
+    "id": "faq-quotation",
+    "question": "What information is needed to get a quotation?",
+    "answer": "Sharing the event date, venue city, event format, duration and expected audience size is usually enough to receive an initial quotation."
   }
 ]

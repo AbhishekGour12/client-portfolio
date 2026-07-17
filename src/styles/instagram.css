@@ -114,12 +114,28 @@
   }
 }
 
-@media (max-width: 576px) {
+@media (max-width: 768px) {
   .instagram-grid {
-    grid-template-columns: 1fr;
-    gap: 15px;
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 16px;
+    padding: 10px 10%;
+    margin: 0 -10%; /* negative margin allows scrolling all the way to edges */
+    scrollbar-width: none; /* Firefox */
   }
+
+  .instagram-grid::-webkit-scrollbar {
+    display: none; /* Chrome/Safari */
+  }
+
+  .instagram-item {
+    flex: 0 0 85%;
+    max-width: 330px;
+    scroll-snap-align: center;
+  }
+
   .instagram-section {
-    padding: 60px 5%;
+    padding: 60px 10%;
   }
 }

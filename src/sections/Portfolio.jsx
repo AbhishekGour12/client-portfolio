@@ -2,20 +2,66 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { portfolioCategories, portfolioItems } from '../data/portfolio';
 import { FaEye, FaTimes, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { ref, onValue } from 'firebase/database';
+import { db } from '../firebase';
 import '../styles/portfolio.css';
 
 const Portfolio = () => {
+  const [categories, setCategories] = useState(['All']);
+  const [projects, setProjects] = useState([]);
   const [activeFilter, setActiveFilter] = useState('All');
-  const [filteredItems, setFilteredItems] = useState(portfolioItems);
+  const [filteredItems, setFilteredItems] = useState([]);
   const [lightboxIndex, setLightboxIndex] = useState(null);
 
+  // Fetch categories and projects from Firebase
+  useEffect(() => {
+    const projectsRef = ref(db, 'projects');
+    const unsubProjects = onValue(projectsRef, (snapshotProjects) => {
+      const projectsData = snapshotProjects.val();
+      
+      if (projectsData) {
+        // Use custom projects from database
+        const projList = Object.keys(projectsData).map(key => projectsData[key]);
+        setProjects(projList);
+
+        // Fetch custom categories
+        const categoriesRef = ref(db, 'categories');
+        onValue(categoriesRef, (snapshotCategories) => {
+          const categoriesData = snapshotCategories.val();
+          if (categoriesData) {
+            const catList = Object.keys(categoriesData).map(key => {
+              const val = categoriesData[key];
+              if (typeof val === 'string') return val;
+              if (val && typeof val === 'object') return val.name || key;
+              return key;
+            });
+            setCategories(['All', ...catList]);
+          } else {
+            // Extract categories from database projects if categories node is missing
+            const uniqueCats = Array.from(new Set(projList.map(p => p.category)));
+            setCategories(['All', ...uniqueCats]);
+          }
+        }, { onlyOnce: true });
+      } else {
+        // Fall back to local default static projects and categories
+        setProjects(portfolioItems);
+        setCategories(portfolioCategories);
+      }
+    });
+
+    return () => {
+      unsubProjects();
+    };
+  }, []);
+
+  // Filter projects dynamically
   useEffect(() => {
     if (activeFilter === 'All') {
-      setFilteredItems(portfolioItems);
+      setFilteredItems(projects);
     } else {
-      setFilteredItems(portfolioItems.filter(item => item.category === activeFilter));
+      setFilteredItems(projects.filter(item => item.category === activeFilter));
     }
-  }, [activeFilter]);
+  }, [activeFilter, projects]);
 
   const handlePrev = (e) => {
     e.stopPropagation();
@@ -51,7 +97,7 @@ const Portfolio = () => {
 
       {/* Categories Filter Bar */}
       <div className="portfolio-filters">
-        {portfolioCategories.map((category) => (
+        {categories.map((category) => (
           <button
             key={category}
             className={`filter-btn clickable ${activeFilter === category ? 'active' : ''}`}

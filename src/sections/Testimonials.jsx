@@ -1,14 +1,34 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Autoplay } from 'swiper/modules';
 import { testimonialsData } from '../data/testimonials';
 import { FaQuoteLeft, FaStar } from 'react-icons/fa';
+import { ref, onValue } from 'firebase/database';
+import { db } from '../firebase';
 
 import 'swiper/css';
 import 'swiper/css/pagination';
 import '../styles/testimonials.css';
 
 const Testimonials = () => {
+  const [testimonials, setTestimonials] = useState([]);
+
+  // Fetch testimonials from Firebase Realtime Database
+  useEffect(() => {
+    const testimonialsRef = ref(db, 'testimonials');
+    const unsub = onValue(testimonialsRef, (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        const testList = Object.keys(data).map(key => data[key]);
+        setTestimonials(testList);
+      } else {
+        setTestimonials(testimonialsData);
+      }
+    });
+
+    return () => unsub();
+  }, []);
+
   return (
     <section id="testimonials" className="section testimonials-section">
       <div className="bg-glow-blob blob-purple testimonials-blob" />
@@ -37,7 +57,7 @@ const Testimonials = () => {
           }}
           className="testimonials-swiper"
         >
-          {testimonialsData.map((test) => (
+          {testimonials.map((test) => (
             <SwiperSlide key={test.id}>
               <div className="glass-card testimonial-card">
                 <FaQuoteLeft className="quote-icon" />
@@ -53,7 +73,7 @@ const Testimonials = () => {
                   <img src={test.avatar} alt={test.name} className="client-avatar" loading="lazy" decoding="async" />
                   <div className="client-meta">
                     <h4>{test.name}</h4>
-                    <span>{test.company}</span>
+                    <span>{test.company || 'Verified Client'}</span>
                   </div>
                 </div>
               </div>
@@ -66,3 +86,4 @@ const Testimonials = () => {
 };
 
 export default Testimonials;
+

@@ -18,7 +18,7 @@
 }
 
 .about-heading {
-  font-size: 2.2rem;
+  font-size: 30px;
   line-height: 1.3;
   margin-bottom: 25px;
 }
@@ -108,13 +108,62 @@
   z-index: 5;
 }
 
-.about-image {
+.about-swiper {
   width: 100%;
-  height: 460px;
-  object-fit: cover;
+  height: 520px;
   border-radius: 16px;
   border: 1px solid var(--color-border);
+  background: rgba(16, 27, 46, 0.4);
+  backdrop-filter: blur(10px);
+  overflow: hidden;
+  position: relative;
+}
+
+.about-slide-inner {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  background: #060b13;
+}
+
+.about-slide-bg {
+  position: absolute;
+  top: -25px;
+  left: -25px;
+  right: -25px;
+  bottom: -25px;
+  background-size: cover;
+  background-position: center;
+  filter: blur(25px) brightness(0.35);
+  opacity: 0.85;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.about-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  /* Show the full image perfectly without cutting it from any side */
+  position: relative;
+  z-index: 2;
   display: block;
+}
+
+.about-swiper .swiper-pagination-bullet {
+  background: var(--text-secondary);
+  opacity: 0.5;
+  transition: var(--transition-fast);
+}
+
+.about-swiper .swiper-pagination-bullet-active {
+  background: var(--color-gold);
+  opacity: 1;
+  box-shadow: 0 0 8px var(--color-gold);
 }
 
 .image-border-gold {
@@ -136,81 +185,298 @@
   box-shadow: var(--glow-gold);
 }
 
-/* Vertical Timeline */
-.timeline-container {
+/* Horizontal Timeline */
+.milestones-section-container {
+  margin-top: 80px;
   position: relative;
-  padding-left: 20px;
+  z-index: 10;
+  width: 100%;
 }
 
 .timeline-section-title {
-  margin-bottom: 25px;
+  font-size: 1.6rem;
+  margin-bottom: 40px;
+  text-align: center;
+  font-family: var(--font-alt);
+  letter-spacing: 0.1em;
+  color: var(--text-primary);
+  text-transform: uppercase;
 }
 
-.timeline-items {
+.timeline-row-wrapper {
   position: relative;
-  padding-left: 25px;
+  padding: 20px 0;
+  width: 100%;
+}
+
+.timeline-line-horizontal {
+  position: absolute;
+  top: 27px;
+  left: 16.66%;
+  right: 16.66%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-gold) 0%, var(--color-purple) 100%);
+  opacity: 0.3;
+  z-index: 1;
+}
+
+.timeline-row-items {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  position: relative;
+  z-index: 2;
+}
+
+.timeline-item-horizontal {
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  align-items: center;
+  text-align: center;
 }
 
-.timeline-line {
-  position: absolute;
-  left: 5px;
-  top: 5px;
-  width: 2px;
-  height: calc(100% - 30px);
-  background: linear-gradient(180deg, var(--color-gold) 0%, var(--color-purple) 100%);
-  opacity: 0.3;
-}
-
-.timeline-item {
-  position: relative;
-}
-
-.timeline-dot {
-  position: absolute;
-  left: -25px;
-  top: 10px;
-  transform: translateX(-50%);
-  width: 10px;
-  height: 10px;
+.timeline-dot-horizontal {
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
   background-color: var(--color-gold);
   box-shadow: var(--glow-gold);
+  margin-bottom: 24px;
+  position: relative;
+  z-index: 3;
+  transition: var(--transition-smooth);
 }
 
-.timeline-year {
+.timeline-item-horizontal:hover .timeline-dot-horizontal {
+  transform: scale(1.3);
+  background-color: var(--color-purple);
+  box-shadow: 0 0 14px var(--color-purple);
+}
+
+.timeline-year-horizontal {
   font-family: var(--font-alt);
-  font-size: 0.95rem;
+  font-size: 1.1rem;
   font-weight: 700;
   color: var(--color-gold);
-  margin-bottom: 6px;
+  margin-bottom: 12px;
 }
 
-.timeline-card {
-  padding: 16px 20px;
+.milestone-card-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 24px;
+  height: 280px; /* Force uniform height for all cards */
+  width: 100%;
   background: rgba(16, 27, 46, 0.4);
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  transition: var(--transition-smooth);
 }
 
-.timeline-card h5 {
-  font-family: var(--font-body);
-  font-size: 1rem;
-  color: var(--text-primary);
+.milestone-card-wrapper:hover {
+  transform: translateY(-6px);
+  border-color: var(--color-gold);
+  box-shadow: 0 8px 30px rgba(212, 175, 55, 0.08);
+}
+
+.milestone-card-header {
+  margin-bottom: 12px;
+}
+
+.milestone-year {
+  font-family: var(--font-alt);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--color-gold);
+  letter-spacing: 0.15em;
+  display: block;
   margin-bottom: 6px;
 }
 
-.timeline-card p {
-  font-size: 0.85rem;
-  line-height: 1.6;
+.milestone-card-title {
+  font-family: var(--font-headings);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.3;
 }
+
+.milestone-card-desc {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 15px;
+  /* Truncate text cleanly to 4 lines using webkit clamp */
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.milestone-more-btn {
+  align-self: flex-start;
+  font-size: 0.8rem;
+  padding: 6px 16px;
+  border-color: rgba(255, 255, 255, 0.2);
+  color: var(--text-secondary);
+  transition: var(--transition-smooth);
+}
+
+.milestone-card-wrapper:hover .milestone-more-btn {
+  border-color: var(--color-gold);
+  color: var(--color-gold);
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.15);
+}
+
+/* Milestone Modal overlay & content styles */
+.milestone-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(8, 17, 31, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3000;
+  padding: 20px;
+}
+
+.milestone-modal-content {
+  max-width: 550px;
+  width: 100%;
+  padding: 35px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--color-border-glow);
+  border-radius: 20px;
+  position: relative;
+  box-shadow: var(--shadow-glass);
+}
+
+.milestone-modal-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 1.2rem;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: var(--transition-smooth);
+}
+
+.milestone-modal-close:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+  border-color: var(--color-gold);
+}
+
+.milestone-modal-header {
+  margin-bottom: 20px;
+}
+
+.milestone-modal-year {
+  font-family: var(--font-alt);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--color-gold);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.milestone-modal-header h3 {
+  font-family: var(--font-headings);
+  font-size: 1.7rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.3;
+}
+
+.milestone-modal-body p {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.8;
+}
+
+/* Responsiveness overrides */
+@media (max-width: 992px) {
+  .timeline-line-horizontal {
+    display: none;
+  }
+  .timeline-row-items {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+  }
+}
+
+@media (max-width: 768px) {
+  .timeline-row-items {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .milestones-section-container {
+    margin-top: 50px;
+  }
+  .milestone-card-wrapper {
+    height: auto;
+    min-height: 240px;
+  }
+  .milestone-modal-content {
+    padding: 25px 20px;
+  }
+  .milestone-modal-header h3 {
+    font-size: 1.4rem;
+  }
+}
+
 
 @media (max-width: 992px) {
   .about-grid {
     grid-template-columns: 1fr;
     gap: 60px;
   }
+
   .about-image-wrapper {
     max-width: 320px;
   }
+
+  .about-swiper {
+    height: 440px;
+  }
+}
+
+#about>.section-title-wrapper>.section-title {
+  font-size: 30px;
+
+
+}
+
+@media (max-width: 468px) {
+  #about>.section-title-wrapper>.section-title {
+    font-size: 20px;
+
+
+  }
+
+  .about-heading {
+    font-size: 20px;
+    text-align: center;
+  }
+
 }

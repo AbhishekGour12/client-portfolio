@@ -3,42 +3,42 @@
     "id": 1,
     "title": "Corporate Gala Interaction",
     "category": "Corporate",
-    "image": "/assets/gallery_corporate_gala.webp",
+    "image": "https://res.cloudinary.com/seqeiob7/image/upload/v1784283563/portfolio/efcqpx2a9dohwxy7fdzo.webp",
     "description": "Engaging the audience on stage during a premium corporate celebration evening."
   },
   {
     "id": 2,
     "title": "Interactive Youth Stage Session",
     "category": "Celebrity",
-    "image": "/assets/gallery_youth_stage.webp",
+    "image": "https://res.cloudinary.com/seqeiob7/image/upload/v1784283568/portfolio/qq8u1wk6bkjmmthvj1ds.webp",
     "description": "Anchoring a high-energy talent round and co-hosting alongside child performers."
   },
   {
     "id": 3,
     "title": "Luxury Saree Sangeet Theme",
     "category": "Wedding",
-    "image": "/assets/gallery_traditional_sangeet.webp",
+    "image": "https://res.cloudinary.com/seqeiob7/image/upload/v1784283566/portfolio/zhpiaqxkstng1wly4sio.webp",
     "description": "Anchored an elegant traditional sangeet night showcasing cultural family walkups."
   },
   {
     "id": 4,
     "title": "Grand Reception Opening Celebration",
     "category": "Wedding",
-    "image": "/assets/gallery_reception_opening.webp",
+    "image": "https://res.cloudinary.com/seqeiob7/image/upload/v1784283565/portfolio/rz3i9lvmfmzpzw5hwjuz.webp",
     "description": "Coordinating stage flows and introducing newlyweds to a palace crowd of 800+ guests."
   },
   {
     "id": 5,
     "title": "Annual Dealer Meet Anchoring",
     "category": "Corporate",
-    "image": "/assets/gallery_dealer_meet.webp",
+    "image": "https://res.cloudinary.com/seqeiob7/image/upload/v1784283564/portfolio/xekznzq5hj645bycny7t.webp",
     "description": "Hosting the corporate recognition meet and facilitating brand executive announcements."
   },
   {
     "id": 6,
     "title": "Award Felicitations Master of Ceremonies",
     "category": "Award Shows",
-    "image": "/assets/gallery_awards_MC.webp",
+    "image": "https://res.cloudinary.com/seqeiob7/image/upload/v1784283563/portfolio/fuzttyyiyroksx0ek1rd.webp",
     "description": "MC-ing the red carpet and main stage awards presentation for elite delegates."
   }
 ]

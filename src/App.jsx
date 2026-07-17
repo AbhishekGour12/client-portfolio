@@ -1,6 +1,7 @@
 import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
 import { motion, AnimatePresence } from 'framer-motion';
+import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 
 // Styles
 import './styles/index.css';
@@ -11,7 +12,6 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import WhatsAppButton from './components/WhatsAppButton';
 import GoogleReviews from './components/GoogleReviews';
-
 
 // Lazy Loaded Sections for Code Splitting
 const Hero = lazy(() => import('./sections/Hero'));
@@ -25,8 +25,38 @@ const Brands = lazy(() => import('./sections/Brands'));
 const InstagramGallery = lazy(() => import('./sections/InstagramGallery'));
 const FAQ = lazy(() => import('./sections/FAQ'));
 const Contact = lazy(() => import('./sections/Contact'));
+const AdminPanel = lazy(() => import('./sections/AdminPanel'));
+const Blog = lazy(() => import('./sections/Blog'));
 
-function App() {
+// Scroll to Top on Route Change
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+};
+
+// Home View rendering all sections except Contact
+const HomeView = () => (
+  <>
+    <Hero />
+    <About />
+    <Statistics />
+    <Services />
+    <Portfolio />
+    <Showreel />
+    <Testimonials />
+    <Brands />
+    <InstagramGallery />
+    <FAQ />
+    <GoogleReviews />
+  </>
+);
+
+function AppContent() {
   const [loading, setLoading] = useState(() => {
     // Skip preloader on mobile/tablet for instant FCP and LCP paint times
     if (typeof window !== 'undefined') {
@@ -36,6 +66,8 @@ function App() {
   });
   const [scrollProgress, setScrollProgress] = useState(0);
   const [showStickyCta, setShowStickyCta] = useState(false);
+  const location = useLocation();
+  const isAdminRoute = location.pathname === '/admin';
 
   // Initial Loader Timeout
   useEffect(() => {
@@ -75,18 +107,40 @@ function App() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const scrollToContact = (e) => {
+  // Handle hash scrolling on page redirection/landing
+  useEffect(() => {
+    if (location.pathname === '/' && location.hash) {
+      const targetId = location.hash.substring(1);
+      const element = document.getElementById(targetId);
+      if (element) {
+        // Wait a brief moment to ensure the component is loaded and rendered
+        const timer = setTimeout(() => {
+          const navbarHeight = 80;
+          const elementPosition = element.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.scrollY - navbarHeight;
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+        }, 150);
+        return () => clearTimeout(timer);
+      }
+    }
+  }, [location]);
+
+
+  const handleStickyCtaClick = (e) => {
     e.preventDefault();
-    const element = document.getElementById('contact');
-    if (element) {
-      const offset = 80;
-      const top = element.getBoundingClientRect().top + window.scrollY - offset;
-      window.scrollTo({ top, behavior: 'smooth' });
+    if (location.pathname === '/contact') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      navigate('/contact');
     }
   };
 
   return (
-    <HelmetProvider>
+    <>
+      <ScrollToTop />
       <SEO />
 
       {/* Accessibility: Skip to Content link */}
@@ -151,7 +205,7 @@ function App() {
             </div>
 
             {/* Header Sticky Navbar */}
-            <Navbar />
+            {!isAdminRoute && <Navbar />}
 
             {/* Main Sections Wrapper */}
             <main id="main-content">
@@ -160,48 +214,52 @@ function App() {
                   <div className="fallback-spinner" />
                 </div>
               }>
-                <Hero />
-                <About />
-                <Statistics />
-                <Services />
-                <Portfolio />
-                <Showreel />
-                <Testimonials />
-                <Brands />
-                <InstagramGallery />
-                <FAQ />
-                {/* Google reviews component is created, but hidden by default inside its logic */}
-                <GoogleReviews />
-                <Contact />
+                <Routes>
+                  <Route path="/" element={<HomeView />} />
+                  <Route path="/contact" element={<Contact />} />
+                  <Route path="/admin" element={<AdminPanel />} />
+                  <Route path="/blog" element={<Blog />} />
+                </Routes>
               </Suspense>
             </main>
 
             {/* Footer */}
-            <Footer />
+            {!isAdminRoute && <Footer />}
 
             {/* Floating WhatsApp CTA */}
-            <WhatsAppButton />
+            {!isAdminRoute && <WhatsAppButton />}
 
             {/* Sticky Booking Bottom Banner */}
-            <div className={`sticky-booking-cta ${showStickyCta ? 'visible' : ''}`}>
-              <div className="sticky-cta-text">
-                Ready to elevate your event? <span>Book Anushi Today</span>
+            {!isAdminRoute && (
+              <div className={`sticky-booking-cta ${showStickyCta ? 'visible' : ''}`}>
+                <div className="sticky-cta-text">
+                  Ready to elevate your event? <span>Book Anushi Today</span>
+                </div>
+                <a
+                  href="/contact"
+                  onClick={handleStickyCtaClick}
+                  className="btn btn-gold sticky-cta-btn clickable"
+                >
+                  Book Your Event Today
+                </a>
               </div>
-              <a
-                href="#contact"
-                onClick={scrollToContact}
-                className="btn btn-gold sticky-cta-btn clickable"
-              >
-                Book Your Event Today
-              </a>
-            </div>
+            )}
 
           </motion.div>
         )}
       </AnimatePresence>
+    </>
+  );
+}
+
+function App() {
+  return (
+    <HelmetProvider>
+      <Router>
+        <AppContent />
+      </Router>
     </HelmetProvider>
   );
 }
 
 export default App;
-

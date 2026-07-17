@@ -13,7 +13,8 @@ import {
   FaUsers,
   FaGem,
   FaTimes,
-  FaArrowRight
+  FaArrowRight,
+  FaBriefcase
 } from 'react-icons/fa';
 import '../styles/services.css';
 
@@ -29,7 +30,8 @@ const FaIcons = {
   FaUsers,
   FaGem,
   FaTimes,
-  FaArrowRight
+  FaArrowRight,
+  FaBriefcase
 };
 
 const Services = () => {
@@ -110,37 +112,43 @@ const Services = () => {
                 <h3>{activeService.title}</h3>
               </div>
 
-              <div className="service-modal-body">
+               <div className="service-modal-body">
                 <p className="service-long-desc">{activeService.longDesc}</p>
                 
-                <div className="service-modal-benefits">
-                  <h4>What Anushi Delivers:</h4>
-                  <ul>
-                    <li>Bespoke speech curation adapted to key brand guidelines or wedding logs.</li>
-                    <li>Synchronized cooperation with AV, DJ, and stage managers.</li>
-                    <li>Graceful management of celebrity panels, VIP protocols, or family milestones.</li>
-                    <li>Highly energetic, memorable, and photo-ready stage presence.</li>
-                  </ul>
-                </div>
+                {activeService.whyChoose && activeService.whyChoose.length > 0 ? (
+                  <div className="service-modal-benefits">
+                    <h4>Why clients choose Anushi:</h4>
+                    <ul>
+                      {activeService.whyChoose.map((benefit, idx) => (
+                        <li key={idx}>{benefit}</li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : (
+                  <div className="service-modal-benefits">
+                    <h4>What Anushi Delivers:</h4>
+                    <ul>
+                      <li>Bespoke speech curation adapted to key brand guidelines or wedding logs.</li>
+                      <li>Synchronized cooperation with AV, DJ, and stage managers.</li>
+                      <li>Graceful management of celebrity panels, VIP protocols, or family milestones.</li>
+                      <li>Highly energetic, memorable, and photo-ready stage presence.</li>
+                    </ul>
+                  </div>
+                )}
+
+                {activeService.highlights && (
+                  <div className="service-modal-highlights" style={{ marginTop: '20px' }}>
+                    <h4 style={{ color: 'var(--color-gold)', marginBottom: '8px', fontSize: '1.1rem', fontFamily: 'var(--font-headings)' }}>
+                      {activeService.highlightsLabel || 'Worked with:'}
+                    </h4>
+                    <p style={{ fontSize: '0.95rem', color: 'var(--text-secondary)', lineHeight: '1.6' }}>
+                      {activeService.highlights}
+                    </p>
+                  </div>
+                )}
               </div>
 
-              <div className="service-modal-footer">
-                <button
-                  onClick={() => {
-                    setActiveService(null);
-                    // Smooth scroll to contact
-                    const element = document.getElementById('contact');
-                    if (element) {
-                      const offset = 80;
-                      const top = element.getBoundingClientRect().top + window.scrollY - offset;
-                      window.scrollTo({ top, behavior: 'smooth' });
-                    }
-                  }}
-                  className="btn btn-gold modal-book-btn clickable"
-                >
-                  Enquire For This Service
-                </button>
-              </div>
+              
             </motion.div>
           </motion.div>
         )}

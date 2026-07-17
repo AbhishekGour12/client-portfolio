@@ -1,139 +1,167 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { FaPlay, FaYoutube, FaInstagram, FaVolumeUp } from 'react-icons/fa';
+import { FaPlay, FaVolumeMute, FaVolumeUp } from 'react-icons/fa';
 import '../styles/showreel.css';
 
 const Showreel = () => {
-  const [isPlayingYoutube, setIsPlayingYoutube] = useState(false);
-  
-  // Replace this YouTube Video ID with Anushi's original showreel ID
-  const youtubeVideoId = 'ysz5S6PUM-U'; // standard placeholder presentation video id
+  const videoRef = useRef(null);
+  const [isMuted, setIsMuted] = useState(true);
+  const [isHovered, setIsHovered] = useState(false);
 
-  const instagramReels = [
-    {
-      id: 1,
-      title: 'Corporate Summit Highlights',
-      likes: '12.4K',
-      comments: '342',
-      link: 'https://instagram.com/reels',
-      image: 'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=crop&w=600&fm=webp&q=70'
-    },
-    {
-      id: 2,
-      title: 'Grand Sangeet Opening Energy',
-      likes: '18.9K',
-      comments: '581',
-      link: 'https://instagram.com/reels',
-      image: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=600&fm=webp&q=70'
+  // IntersectionObserver to auto-play when in view, and pause when out of view
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // Autoplay when scrolled in (must be muted by default)
+            video.play().catch((err) => {
+              console.log("Autoplay prevented by browser: needs user interaction or mute.", err);
+            });
+          } else {
+            // Pause when scrolled out
+            video.pause();
+          }
+        });
+      },
+      { threshold: 0.1 } // triggers when 10% of the video card enters/leaves the viewport
+    );
+
+    observer.observe(video);
+
+    return () => {
+      if (video) observer.unobserve(video);
+    };
+  }, []);
+
+  // Hover triggers play / pause
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+    if (videoRef.current) {
+      videoRef.current.play().catch((err) => console.log("Play on hover blocked:", err));
     }
-  ];
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+    if (videoRef.current) {
+      videoRef.current.pause();
+    }
+  };
+
+  const toggleMute = (e) => {
+    e.stopPropagation();
+    if (videoRef.current) {
+      videoRef.current.muted = !videoRef.current.muted;
+      setIsMuted(videoRef.current.muted);
+    }
+  };
 
   return (
-    <section id="showreel" className="section showreel-section">
+    <section id="showreel" className="section showreel-section" style={{ paddingLeft: '5%', paddingRight: '5%' }}>
       <div className="bg-glow-blob blob-gold showreel-blob" />
-      
-      <div className="section-title-wrapper">
+
+      <div className="section-title-wrapper" style={{ marginBottom: '35px' }}>
         <span className="section-subtitle">Anchor In Action</span>
         <h2 className="section-title">Showreel & Clips</h2>
       </div>
 
-      <div className="showreel-container">
-        
-        {/* Featured YouTube Showreel */}
+      <div className="showreel-container" style={{ maxWidth: '1200px', width: '100%' }}>
+
+        {/* Featured Full-Width Video Player Card */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
+          viewport={{ once: true, amount: 0.15 }}
           transition={{ duration: 0.8 }}
           className="featured-showreel glass-card"
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+          style={{ width: '100%', overflow: 'hidden', padding: 0 }}
         >
-          <div className="showreel-video-wrapper">
-            {!isPlayingYoutube ? (
+          <div className="showreel-video-wrapper" style={{ position: 'relative', width: '100%', paddingTop: 0, height: 'auto', background: '#000' }}>
+            <video
+              ref={videoRef}
+              src="/Showreel .mp4"
+              controls
+              muted={isMuted}
+              loop
+              playsInline
+              style={{
+                width: '100%',
+                height: 'auto',
+                display: 'block',
+                border: 'none',
+                borderRadius: '0'
+              }}
+            />
+
+            {/* Custom Control Mute Overlay Button */}
+            <button
+              onClick={toggleMute}
+              className="clickable"
+              style={{
+                position: 'absolute',
+                bottom: '20px',
+                right: '20px',
+                background: 'rgba(8, 17, 31, 0.75)',
+                backdropFilter: 'blur(4px)',
+                border: '1px solid rgba(255,255,255,0.1)',
+                color: '#fff',
+                borderRadius: '50%',
+                width: '45px',
+                height: '45px',
+                display: 'flex',
+                alignItems: 'center',
+                justifycontent: 'center',
+                justifyContent: 'center',
+                zIndex: 20,
+                cursor: 'pointer',
+                transition: 'all 0.3s ease'
+              }}
+              title={isMuted ? "Unmute Sound" : "Mute Sound"}
+            >
+              {isMuted ? <FaVolumeMute style={{ color: 'var(--color-gold)' }} /> : <FaVolumeUp style={{ color: 'var(--color-gold)' }} />}
+            </button>
+
+            {/* Auto Play Hover Indicator Alert */}
+            {isMuted && !isHovered && (
               <div
-                className="showreel-thumbnail-overlay clickable"
-                onClick={() => setIsPlayingYoutube(true)}
+                style={{
+                  position: 'absolute',
+                  top: '20px',
+                  left: '20px',
+                  background: 'rgba(8, 17, 31, 0.6)',
+                  padding: '6px 14px',
+                  borderRadius: '20px',
+                  color: 'var(--text-secondary)',
+                  fontSize: '0.75rem',
+                  fontFamily: 'var(--font-alt)',
+                  zIndex: 20,
+                  pointerEvents: 'none',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px'
+                }}
               >
-                <img
-                  src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=1200&fm=webp&q=75"
-                  alt="Anushi Kothari Showreel Thumbnail"
-                  className="showreel-thumbnail"
-                  loading="lazy"
-                  decoding="async"
-                />
-                <div className="thumbnail-darkener" />
-                <div className="play-button-outer">
-                  <div className="play-button-inner">
-                    <FaPlay className="play-icon" />
-                  </div>
-                </div>
-                <div className="showreel-overlay-text">
-                  <FaYoutube className="yt-icon" />
-                  <span>Click to Watch Official Showreel</span>
-                </div>
+                <span style={{ display: 'inline-block', width: '8px', height: '8px', background: 'var(--color-gold)', borderRadius: '50%', animation: 'ping 1.5s infinite' }}></span>
+                Autoplaying Muted (Hover or Tap to Listen)
               </div>
-            ) : (
-              <iframe
-                title="Anushi Kothari Hosting Showreel"
-                src={`https://www.youtube.com/embed/${youtubeVideoId}?autoplay=1&rel=0`}
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                className="showreel-iframe"
-              />
             )}
           </div>
-          
-          <div className="showreel-details">
-            <h3>Official Anchor Showreel</h3>
-            <p>
-              Experience the energy, timing, and elegance that Anushi Kothari brings to the stage. This compilation showcases highlights from global corporate summits, luxury weddings, sangeets, and massive celebrity concert audiences.
+
+          <div className="showreel-details" style={{ padding: '30px' }}>
+            <h3 style={{ fontFamily: 'var(--font-headings)', fontSize: '1.8rem', color: 'var(--color-gold)' }}>
+              Official MC & Anchor Showreel
+            </h3>
+            <p style={{ marginTop: '10px', fontSize: '1rem', color: 'var(--text-secondary)' }}>
+              Watch highlights from global corporate meets, award functions, high-profile celebrity events, and grand wedding sangeets. Experience the energy, timing, and luxury production value that Anushi Kothari brings to every stage.
             </p>
-            <div className="replace-comment-label">
-              {"// Replace the youtubeVideoId state variable in Showreel.jsx with your original YouTube ID."}
-            </div>
           </div>
         </motion.div>
-
-        {/* Secondary Instagram Clips Grid */}
-        <div className="reels-grid">
-          {instagramReels.map((reel, index) => (
-            <motion.div
-              key={reel.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.8, delay: index * 0.1 }}
-              className="reel-card glass-card"
-            >
-              <div className="reel-video-mock">
-                <img src={reel.image} alt={reel.title} className="reel-thumbnail" loading="lazy" decoding="async" />
-                <div className="reel-dark-overlay" />
-                <a
-                  href={reel.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="reel-play-btn clickable"
-                  aria-label="Watch Instagram Reel"
-                >
-                  <FaInstagram />
-                </a>
-                <div className="reel-audio-icon">
-                  <FaVolumeUp />
-                </div>
-              </div>
-              <div className="reel-info">
-                <h4>{reel.title}</h4>
-                <div className="reel-stats">
-                  <span><strong>{reel.likes}</strong> Likes</span>
-                  <span>•</span>
-                  <span><strong>{reel.comments}</strong> Comments</span>
-                </div>
-                <div className="replace-comment-label">
-                  {"// Swap link with original Instagram Reel URL."}
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
 
       </div>
     </section>

@@ -1,0 +1,98 @@
+[
+  {
+    "id": "featured-1",
+    "title": "What Happens Before I Go On Stage?",
+    "category": "Behind The Scenes",
+    "date": "May 20, 2025",
+    "readTime": "4 min read",
+    "summary": "From last-minute scripts to calming my nerves, here's what really goes on behind that confident smile.",
+    "image": "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=1200&fm=webp&q=75",
+    "content": "A detailed behind-the-scenes look at the preparation, script reviewing, voice warmups, and coordination with event directors that happens in the final 60 minutes before stepping onto a stage in front of thousands of people. It takes a village to run an event, but as the Master of Ceremonies, the final delivery rests on your shoulders.",
+    "featured": true,
+    "trending": false
+  },
+  {
+    "id": "trending-1",
+    "title": "5 Things I Wish I Knew When I Started Anchoring",
+    "category": "Anchoring Tips",
+    "date": "May 15, 2025",
+    "readTime": "4 min read",
+    "summary": "Essential lessons for aspiring presenters, from microphone control to handling unexpected event delays.",
+    "image": "https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=crop&w=300&h=300&fm=webp&q=70",
+    "content": "Aspiring anchors often focus solely on their speech, but micro-actions like audience reading, managing backstage timelines, and mastering acoustics are what separate a novice from a professional. Always check your mic levels, wear comfortable stage-ready shoes, and remember that silence can be a powerful tool to command attention.",
+    "featured": false,
+    "trending": true
+  },
+  {
+    "id": "trending-2",
+    "title": "From College Events to National Stages – My Journey",
+    "category": "Behind The Scenes",
+    "date": "May 10, 2025",
+    "readTime": "6 min read",
+    "summary": "Reflecting on the pivotal moments, rejections, and breakthrough gigs of my presenter career.",
+    "image": "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=300&h=300&fm=webp&q=70",
+    "content": "A personal story tracing back to my first college hosting gig, detailing the persistence required to break into corporate shows, celebrity galas, and palace weddings. Rejection is part of the game, but every small gig builds the confidence and network needed to land massive national platforms.",
+    "featured": false,
+    "trending": true
+  },
+  {
+    "id": "trending-3",
+    "title": "The Power of Communication in Today's World",
+    "category": "Anchoring Tips",
+    "date": "May 5, 2025",
+    "readTime": "5 min read",
+    "summary": "Why public speaking and storytelling are critical modern skills in professional spaces.",
+    "image": "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=300&h=300&fm=webp&q=70",
+    "content": "Communication is more than words; it is body language, listening, tone, and empathy. Discover how to control these variables to deliver a powerful speech. Learning to command a room with stories instead of static slides will set you apart in any corporate environment.",
+    "featured": false,
+    "trending": true
+  },
+  {
+    "id": "grid-1",
+    "title": "How I Prepare for a Big Corporate Event",
+    "category": "Events",
+    "date": "May 18, 2025",
+    "readTime": "4 min read",
+    "summary": "Preparation is the key! Here's my step-by-step process before hosting a big corporate show.",
+    "image": "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=600&h=400&fm=webp&q=75",
+    "content": "In corporate anchoring, understanding the brand message, coordinating slides, and aligning with key executives is crucial. My step-by-step preparation involves studying client brief decks, reviewing sponsor name pronunciations, and syncing with the technical AV team on cues.",
+    "featured": false,
+    "trending": false
+  },
+  {
+    "id": "grid-2",
+    "title": "3 Tips to Overcome Stage Fear Like a Pro",
+    "category": "Anchoring Tips",
+    "date": "May 12, 2025",
+    "readTime": "5 min read",
+    "summary": "Nervous before going on stage? These tips have helped me every single time.",
+    "image": "https://images.unsplash.com/photo-1506157786151-b8491531f063?auto=format&fit=crop&w=600&h=400&fm=webp&q=75",
+    "content": "Stage fear is completely natural. The key is to channel that adrenaline into positive stage presence. Here are three techniques to control your breathing, focus your gaze above the crowd to seek friendly anchors, and own the room by pacing your speech.",
+    "featured": false,
+    "trending": false
+  },
+  {
+    "id": "grid-3",
+    "title": "A Day in My Life When I'm Not on Stage",
+    "category": "Lifestyle",
+    "date": "May 8, 2025",
+    "readTime": "4 min read",
+    "summary": "Behind the glamour, it's all about balance, growth and a good cup of coffee!",
+    "image": "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=600&h=400&fm=webp&q=75",
+    "content": "What does an anchor do on off-days? Exploring morning workouts, reading new event logs, voice relaxation routines, and travel schedules. Rest is just as important as the performance itself.",
+    "featured": false,
+    "trending": false
+  },
+  {
+    "id": "grid-4",
+    "title": "Travel Diaries: Where I Find My Inspiration",
+    "category": "Travel",
+    "date": "May 2, 2025",
+    "readTime": "6 min read",
+    "summary": "Exploring new places, cultures and stories that fuel my creativity.",
+    "image": "https://images.unsplash.com/photo-1506157786151-b8491531f063?auto=format&fit=crop&w=600&h=400&fm=webp&q=75",
+    "content": "Traveling to heritage sites, attending local festivals, and meeting new people provides fresh perspectives that help me write engaging scripts. Immersing yourself in different cultures broadens your language choices and stage storytelling vocabulary.",
+    "featured": false,
+    "trending": false
+  }
+]

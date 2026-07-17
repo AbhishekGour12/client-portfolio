@@ -9,7 +9,7 @@ const SEO = () => {
     'alternateName': 'Anchor Anushi Kothari',
     'description': 'Premium, luxury, and high-energy event hosting for corporate summits, awards, product launches, and destination weddings by celebrity anchor Anushi Kothari.',
     'url': 'https://anushikothari.com',
-    'telephone': '+919876543210',
+    'telephone': '+919983456885',
     'priceRange': '$$$$',
     'address': {
       '@type': 'PostalAddress',
@@ -18,10 +18,9 @@ const SEO = () => {
       'addressCountry': 'IN'
     },
     'sameAs': [
-      'https://instagram.com/anushi_kothari',
-      'https://linkedin.com/in/anushikothari',
-      'https://youtube.com/@anushikothari',
-      'https://facebook.com/anushikothari'
+      'https://www.instagram.com/anchor_anushi/?hl=en',
+      'https://www.linkedin.com/in/anushi-kothari-049821214/',
+      'https://www.youtube.com/@AnchorAnushi'
     ]
   };
 

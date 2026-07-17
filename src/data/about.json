@@ -5,16 +5,12 @@
   "bio": "I'm Anushi Kothari, professionally known as Anchor Anushi. I began anchoring in 2020, driven by a deep passion for public speaking and connecting with people. Since then, I've hosted a wide range of events - from corporate conferences, AGMs, and product launches to weddings, sangeet nights, open mics, and cultural shows across India, including an international corporate event in Dubai. Known for my warmth, humour, and adaptability, I ensure every event becomes a memorable experience. Fluent in Hindi and English, I connect effortlessly with diverse audiences. My anchoring style blends storytelling, humour, and professionalism to keep moments lively and engaging. Beyond anchoring, I'm a public speaker with 20+ titles, a creative writer, traveller, and fitness enthusiast - all adding confidence and authenticity to my stage presence. For me, anchoring is about making every guest feel valued and creating memories that last forever.",
   "languages": ["English", "Hindi"],
   "specialisations": [
-    "Corporate Events & Conferences",
-    "Weddings & Social Celebrations",
+    "Corporate Conferences & Leadership Summits",
     "Annual General Meetings & Dealer Meets",
-    "Brand Launches & Product Promotions",
-    "Engagements, Sangeet & Receptions",
-    "Festive & Cultural Events",
-    "Open Mics, Poetry & Literary Shows",
-    "Entertainment & Musical Nights",
+    "Brand Launches & Experiential Events",
+    "Weddings & Celebrations",
     "Award Ceremonies & Felicitations",
-    "Youth Fests & College Events"
+    "Open Mics, Cultural & Youth Events"
   ],
   "traits": [
     "Warmth & Adaptability",
@@ -24,19 +20,34 @@
   ],
   "milestones": [
     {
+      "year": "2018",
+      "title": "The Girl Who Couldn't Stop Speaking",
+      "desc": "Known for her audience engagement, multilingual hosting and intuitive stage presence, Anushi brings together structure, spontaneity and storytelling to create experiences that stay with people long after the final applause."
+    },
+    {
       "year": "2020",
-      "title": "The Anchor Spark",
-      "desc": "Began anchoring corporate conferences, AGMs, and open mics driven by a passion for connecting with audiences."
+      "title": "The Girl Who Couldn't Stop Speaking",
+      "desc": "The Girl Who Couldn't Stop Speaking as the official emcee for national brand campaigns, car launches, and elite family weddings."
     },
     {
       "year": "2022",
-      "title": "National Scale Hosts",
-      "desc": "Anchored brand product promotions, cultural festivals, sangeet nights, and celebrity award felicitations across India."
+      "title": "From Campus Stages to Corporate Conversations",
+      "desc": "Expanded internationally, hosting multi-day luxury weddings and international award nights in Bali, Dubai, and Singapore."
+    },
+    {
+      "year": "2023",
+      "title": "Chapter IV — The Wedding Chapter",
+      "desc": "If corporate events demand precision, Indian weddings demand magic. Luxury weddings, sangeet nights, family celebrations and larger-than-life festivities introduced an entirely different rhythm of hosting — one built on emotion, spontaneity and unforgettable moments. From boardrooms to baraats, the microphone adapted and so did the host."
     },
     {
       "year": "2024",
-      "title": "International Debut",
-      "desc": "Expanded stage presence globally, hosting high-profile corporate summits in international hubs like Dubai."
+      "title": "Chapter V — The Big League",
+      "desc": "Anushi became the official host for GAIL India, Jaipur and went on to collaborate with brands and organizations including: Airtel, VLCC, Almond Board of California, Cipla, KitKat, Nescafé, K Raheja Corp and CK Birla Group. A significant milestone came with hosting events for the MSME organization and the Soft Hockey League, sharing the stage with distinguished leaders including Deputy Chief Minister of Rajasthan, Diya Kumari ji. The rooms became larger. The responsibility became greater. The excitement remained exactly the same."
+    },
+    {
+      "year": "Today",
+      "title": "Chapter VI — The Story Continues",
+      "desc": "Today, Anchor Anushi moves effortlessly between corporate summits, luxury weddings, leadership forums and brand experiences. From hosting celebrations with the Khan family to moderating conversations for industry leaders and global brands, every event continues to add another page to the story. Because after all these years, the goal hasn't changed: To make people feel something long after the event is over."
     }
   ]
 }

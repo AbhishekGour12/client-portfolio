@@ -2,9 +2,23 @@
   {
     "id": "instagram",
     "name": "Instagram",
-    "url": "https://instagram.com/anchor_anushi",
+    "url": "https://www.instagram.com/anchor_anushi/?hl=en",
     "iconName": "FaInstagram",
-    "username": "@anchor_anushi"
+    "username": "Anchor_Anushi"
+  },
+  {
+    "id": "linkedin",
+    "name": "LinkedIn",
+    "url": "https://www.linkedin.com/in/anushi-kothari-049821214/",
+    "iconName": "FaLinkedinIn",
+    "username": "Anushi Kothari"
+  },
+  {
+    "id": "youtube",
+    "name": "YouTube",
+    "url": "https://www.youtube.com/@AnchorAnushi",
+    "iconName": "FaYoutube",
+    "username": "Anchor Anushi Kothari"
   },
   {
     "id": "email",
@@ -44,8 +58,8 @@
   {
     "id": "whatsapp-chat",
     "name": "WhatsApp Direct Link",
-    "url": "https://shorturl.at/f2ctm",
+    "url": "https://wa.me/919983456885",
     "iconName": "FaWhatsapp",
-    "username": "Chat directly on WhatsApp"
+    "username": "+91 99834 56885"
   }
 ]
