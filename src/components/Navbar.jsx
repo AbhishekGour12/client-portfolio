@@ -62,7 +62,7 @@ const Navbar = () => {
   const handleNavClick = (e, targetId) => {
     e.preventDefault();
     setIsMobileMenuOpen(false);
-    
+
     if (targetId === 'contact') {
       navigate('/contact');
       window.scrollTo(0, 0);
@@ -83,7 +83,7 @@ const Navbar = () => {
         const navbarHeight = 80;
         const elementPosition = element.getBoundingClientRect().top;
         const offsetPosition = elementPosition + window.scrollY - navbarHeight;
-        
+
         window.scrollTo({
           top: offsetPosition,
           behavior: 'smooth'
@@ -96,7 +96,7 @@ const Navbar = () => {
     <nav className={`navbar ${isScrolled ? 'navbar-scrolled' : ''}`}>
       <div className="navbar-container">
         <a href="#home" className="navbar-logo" onClick={(e) => handleNavClick(e, 'home')}>
-          ANUSHI <span>KOTHARI</span>
+          <img src="/logo.png" alt="Anushi Kothari Logo" className="navbar-logo-img" />
         </a>
 
         {/* Desktop Links */}
