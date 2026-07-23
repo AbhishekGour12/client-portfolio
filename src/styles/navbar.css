@@ -212,3 +212,15 @@
   width: 100%;
   margin-top: 20px;
 }
+
+@media (max-width: 376px) {
+  .navbar-logo-img {
+    height: 70px;
+  }
+
+  .navbar-scrolled .navbar-logo-img {
+    height: 70px;
+  }
+
+
+}

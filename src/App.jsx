@@ -229,21 +229,6 @@ function AppContent() {
             {/* Floating WhatsApp CTA */}
             {!isAdminRoute && <WhatsAppButton />}
 
-            {/* Sticky Booking Bottom Banner */}
-            {!isAdminRoute && (
-              <div className={`sticky-booking-cta ${showStickyCta ? 'visible' : ''}`}>
-                <div className="sticky-cta-text">
-                  Ready to elevate your event? <span>Book Anushi Today</span>
-                </div>
-                <a
-                  href="/contact"
-                  onClick={handleStickyCtaClick}
-                  className="btn btn-gold sticky-cta-btn clickable"
-                >
-                  Book Your Event Today
-                </a>
-              </div>
-            )}
 
           </motion.div>
         )}
