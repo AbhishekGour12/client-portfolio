@@ -38,18 +38,38 @@ const Navbar = () => {
     };
 
     const observer = new IntersectionObserver(observerCallback, observerOptions);
+    const observedIds = new Set();
+    let intervalId;
+    let attempts = 0;
 
-    const timer = setTimeout(() => {
+    const setupObserver = () => {
+      attempts++;
       navigationLinks.forEach((link) => {
+        if (observedIds.has(link.targetId)) return;
         const el = document.getElementById(link.targetId);
-        if (el) observer.observe(el);
+        if (el) {
+          observer.observe(el);
+          observedIds.add(link.targetId);
+        }
       });
-    }, 150);
+
+      const homeSections = ['home', 'about', 'portfolio', 'services'];
+      const allObserved = location.pathname === '/' 
+        ? homeSections.every(id => observedIds.has(id))
+        : true;
+
+      if ((allObserved || attempts >= 30) && intervalId) {
+        clearInterval(intervalId);
+      }
+    };
+
+    intervalId = setInterval(setupObserver, 300);
+    setupObserver();
 
     return () => {
       window.removeEventListener('scroll', handleScrollNavbar);
       observer.disconnect();
-      clearTimeout(timer);
+      if (intervalId) clearInterval(intervalId);
     };
   }, [location.pathname]);
 

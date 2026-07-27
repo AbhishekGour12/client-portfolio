@@ -154,7 +154,7 @@ const Footer = () => {
 
         <div className="footer-bottom">
           <p className="footer-copy">
-            &copy; {new Date().getFullYear()} Anushi Kothari. All Rights Reserved. Designed for Luxury.
+            &copy; {new Date().getFullYear()} Anushi Kothari. All Rights Reserved. Designed for Luxury<span onClick={() => { navigate('/admin'); window.scrollTo(0, 0); }} style={{ cursor: 'default', userSelect: 'none' }}>.</span>
           </p>
           <div className="footer-legal">
             <a href="#privacy" className="clickable">Privacy Policy</a>
