@@ -5,8 +5,11 @@ import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-// Load environment variables
-dotenv.config();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Load environment variables from local server directory
+dotenv.config({ path: path.resolve(__dirname, '.env') });
 
 const app = express();
 const PORT = process.env.PORT || 5001;
@@ -220,13 +223,13 @@ app.post('/api/contact', async (req, res) => {
       subject: `[Booking Inquiry] ${event_type} - ${user_name}`,
       html: emailHtml,
       text: `New Booking Inquiry from ${user_name}\n\n` +
-            `Client Email: ${user_email}\n` +
-            `Client Phone: ${user_phone}\n` +
-            `Event Type: ${event_type}\n` +
-            `Event Date: ${event_date}\n` +
-            `Event Location: ${event_location}\n` +
-            `Expected Budget: ${event_budget}\n\n` +
-            `Message:\n${message}`,
+        `Client Email: ${user_email}\n` +
+        `Client Phone: ${user_phone}\n` +
+        `Event Type: ${event_type}\n` +
+        `Event Date: ${event_date}\n` +
+        `Event Location: ${event_location}\n` +
+        `Expected Budget: ${event_budget}\n\n` +
+        `Message:\n${message}`,
     };
 
     // Send email

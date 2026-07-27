@@ -25,7 +25,7 @@ const Navbar = () => {
     // Active Section Tracking via IntersectionObserver
     const observerOptions = {
       root: null,
-      rootMargin: '-40% 0px -50% 0px', // check elements near vertical center
+      rootMargin: '-20% 0px -40% 0px',
       threshold: 0
     };
 
@@ -39,25 +39,34 @@ const Navbar = () => {
 
     const observer = new IntersectionObserver(observerCallback, observerOptions);
 
-    navigationLinks.forEach((link) => {
-      const el = document.getElementById(link.targetId);
-      if (el) observer.observe(el);
-    });
+    const timer = setTimeout(() => {
+      navigationLinks.forEach((link) => {
+        const el = document.getElementById(link.targetId);
+        if (el) observer.observe(el);
+      });
+    }, 150);
 
     return () => {
       window.removeEventListener('scroll', handleScrollNavbar);
       observer.disconnect();
+      clearTimeout(timer);
     };
-  }, []);
+  }, [location.pathname]);
 
-  // Set active section when visiting contact or blog page
+  // Set active section when routing or loading specific sections/pages
   useEffect(() => {
     if (location.pathname === '/contact') {
       setActiveSection('contact');
     } else if (location.pathname === '/blog') {
       setActiveSection('blog');
+    } else if (location.pathname === '/') {
+      if (location.hash) {
+        setActiveSection(location.hash.substring(1));
+      } else {
+        setActiveSection('home');
+      }
     }
-  }, [location.pathname]);
+  }, [location.pathname, location.hash]);
 
   const handleNavClick = (e, targetId) => {
     e.preventDefault();

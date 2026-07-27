@@ -38,7 +38,7 @@ const Hero = () => {
           return;
         }
       }
-      
+
       timer = setTimeout(handleType, typingSpeed);
     };
 
@@ -71,7 +71,7 @@ const Hero = () => {
         decoding="async"
       />
       <div className="hero-gradient-overlay" />
-      
+
       <div className="bg-glow-blob blob-gold hero-blob-1" />
       <div className="bg-glow-blob blob-purple hero-blob-2" />
 
@@ -111,28 +111,9 @@ const Hero = () => {
           transition={{ duration: 0.8, delay: 0.7 }}
           className="hero-description"
         >
-         Your Voice For Every Ocassion
+          Your Voice For Every Ocassion
         </motion.p>
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.9 }}
-          className="hero-cta-group"
-        >
-          <button
-            onClick={() => handleScrollTo('contact')}
-            className="btn btn-gold hero-btnclickable"
-          >
-            <FaCalendarAlt /> Book Now
-          </button>
-          
-          <button
-            onClick={() => handleScrollTo('showreel')}
-            className="btn btn-outline hero-btnclickable"
-          >
-            <FaPlay /> Watch Showreel
-          </button>
-        </motion.div>
+
       </div>
 
       <button

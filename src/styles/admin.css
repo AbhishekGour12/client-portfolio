@@ -238,9 +238,25 @@
   font-size: 0.8rem;
   color: var(--text-secondary);
   margin: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  max-height: 60px;
+  overflow-y: auto;
+  white-space: normal;
+  word-break: break-word;
+  padding-right: 6px;
+}
+
+.admin-item-details p::-webkit-scrollbar {
+  width: 4px;
+}
+
+.admin-item-details p::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 4px;
+}
+
+.admin-item-details p::-webkit-scrollbar-thumb {
+  background: var(--color-gold);
+  border-radius: 4px;
 }
 
 .admin-item-details .rating-stars {

@@ -42,6 +42,23 @@
   color: var(--text-secondary);
   font-style: italic;
   margin-bottom: 20px;
+  max-height: 120px;
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+.testimonial-text::-webkit-scrollbar {
+  width: 4px;
+}
+
+.testimonial-text::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 4px;
+}
+
+.testimonial-text::-webkit-scrollbar-thumb {
+  background: var(--color-purple);
+  border-radius: 4px;
 }
 
 .testimonial-rating {

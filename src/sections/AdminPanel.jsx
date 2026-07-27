@@ -27,7 +27,9 @@ import {
   FaLock, 
   FaExclamationTriangle,
   FaCheckCircle,
-  FaBookOpen
+  FaBookOpen,
+  FaLinkedin,
+  FaFacebook
 } from 'react-icons/fa';
 import '../styles/admin.css';
 
@@ -63,6 +65,7 @@ const AdminPanel = () => {
   const [testimonials, setTestimonials] = useState([]);
   const [instagramPosts, setInstagramPosts] = useState([]);
   const [blogs, setBlogs] = useState([]);
+  const [aboutCarousel, setAboutCarousel] = useState([]);
 
   // Toast / notification state
   const [toast, setToast] = useState(null);
@@ -105,6 +108,13 @@ const AdminPanel = () => {
   const [blogFeatured, setBlogFeatured] = useState(false);
   const [blogTrending, setBlogTrending] = useState(false);
   const [editingBlog, setEditingBlog] = useState(null); // { id, title, category, summary, content, image, publicId, date, readTime, featured, trending }
+
+  // Tab 6: About Carousel Form & Editing
+  const [aboutImagesList, setAboutImagesList] = useState([]); // Array of File objects for adding
+  const [aboutImagePreviews, setAboutImagePreviews] = useState([]); // Array of preview URLs
+  const [aboutSingleImage, setAboutSingleImage] = useState(null); // Single File object for editing
+  const [aboutSinglePreview, setAboutSinglePreview] = useState(''); // Single preview URL for editing
+  const [editingAbout, setEditingAbout] = useState(null); // { id, url, publicId }
 
   // Set up Firebase Auth state listener
   useEffect(() => {
@@ -203,12 +213,28 @@ const AdminPanel = () => {
       }
     });
 
+    // 6. About Carousel
+    const aboutCarouselRef = ref(db, 'aboutCarousel');
+    const unsubAbout = onValue(aboutCarouselRef, (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        const aboutList = Object.keys(data).map(key => ({
+          id: key,
+          ...data[key]
+        }));
+        setAboutCarousel(aboutList);
+      } else {
+        setAboutCarousel([]);
+      }
+    });
+
     return () => {
       unsubCategories();
       unsubProjects();
       unsubTestimonials();
       unsubInstagram();
       unsubBlogs();
+      unsubAbout();
     };
   }, [user]);
 
@@ -604,30 +630,57 @@ const AdminPanel = () => {
     }
   };
 
-  // Tab 4: Create or Update Instagram Post
+  // Tab 4: Create or Update Social Feed Post
   const handleInstagramSubmit = async (e) => {
     e.preventDefault();
     if (!instagramLink.trim()) return;
 
     const trimmedLink = instagramLink.trim();
-    const igRegex = /(https?:\/\/(?:www\.)?instagram\.com\/(?:p|reel|tv)\/[A-Za-z0-9_-]+)/;
-    const match = trimmedLink.match(igRegex);
+    
+    // Check URL validity
+    let isValidUrl = false;
+    try {
+      new URL(trimmedLink);
+      isValidUrl = true;
+    } catch (_) {
+      isValidUrl = false;
+    }
 
-    if (!match) {
-      showToast('Invalid Instagram link. Must be a post or reel (e.g. /p/ or /reel/)', 'error');
+    if (!isValidUrl) {
+      showToast('Please enter a valid URL.', 'error');
+      return;
+    }
+
+    let cleanLink = trimmedLink;
+    
+    if (trimmedLink.includes('instagram.com') || trimmedLink.includes('instagr.am')) {
+      const igRegex = /(https?:\/\/(?:www\.)?instagram\.com\/(?:p|reel|tv)\/[A-Za-z0-9_-]+)/;
+      const match = trimmedLink.match(igRegex);
+      if (match) {
+        cleanLink = match[1];
+      } else {
+        showToast('Invalid Instagram link. Must be a post or reel (e.g. /p/ or /reel/)', 'error');
+        return;
+      }
+    } else if (trimmedLink.includes('linkedin.com')) {
+      if (!trimmedLink.includes('/posts/') && !trimmedLink.includes('/feed/update/') && !trimmedLink.includes('/embed/')) {
+        showToast('LinkedIn URL should be a post update (e.g., contains /posts/ or /feed/update/).', 'warning');
+      }
+    } else if (trimmedLink.includes('facebook.com') || trimmedLink.includes('fb.watch')) {
+      // Allow any Facebook post/video/reel links
+    } else {
+      showToast('Only Instagram, LinkedIn, or Facebook links are supported for the Social Feed.', 'error');
       return;
     }
 
     setLoading(true);
     try {
-      const cleanLink = match[1];
-      
       if (editingInstagram) {
         const igRef = ref(db, `instagram/${editingInstagram.id}`);
         await update(igRef, {
           link: cleanLink
         });
-        showToast('Instagram link updated!');
+        showToast('Social link updated!');
         setEditingInstagram(null);
       } else {
         const instagramRef = ref(db, 'instagram');
@@ -636,7 +689,7 @@ const AdminPanel = () => {
           id: newIgRef.key,
           link: cleanLink
         });
-        showToast('Instagram link added successfully!');
+        showToast('Social link added successfully!');
       }
 
       setInstagramLink('');
@@ -808,6 +861,119 @@ const AdminPanel = () => {
     }
   };
 
+  // File picker handler for About Carousel
+  const handleAboutImageChange = (e) => {
+    const files = Array.from(e.target.files);
+    if (editingAbout) {
+      if (files[0]) {
+        setAboutSingleImage(files[0]);
+        setAboutSinglePreview(URL.createObjectURL(files[0]));
+      }
+    } else {
+      if (files.length > 0) {
+        setAboutImagesList(files);
+        const previews = files.map(file => URL.createObjectURL(file));
+        setAboutImagePreviews(previews);
+      }
+    }
+  };
+
+  // Tab 6: Create or Update About Image/Carousel Item
+  const handleAboutSubmit = async (e) => {
+    e.preventDefault();
+    if (editingAbout) {
+      if (!aboutSingleImage) {
+        showToast('Please select a replacement image.', 'error');
+        return;
+      }
+
+      setLoading(true);
+      try {
+        showToast('Uploading new image to Cloudinary...', 'success');
+        const uploadResult = await uploadToCloudinary(aboutSingleImage);
+        if (editingAbout.publicId) {
+          showToast('Cleaning up old image...', 'success');
+          await deleteFromCloudinary(editingAbout.publicId);
+        }
+        const aboutRef = ref(db, `aboutCarousel/${editingAbout.id}`);
+        await update(aboutRef, {
+          url: uploadResult.url,
+          publicId: uploadResult.publicId
+        });
+        showToast('About image updated successfully!');
+        setEditingAbout(null);
+        setAboutSingleImage(null);
+        setAboutSinglePreview('');
+      } catch (err) {
+        console.error(err);
+        showToast(err.message || 'Failed to update About image.', 'error');
+      } finally {
+        setLoading(false);
+      }
+    } else {
+      if (aboutImagesList.length === 0) {
+        showToast('Please select at least one image.', 'error');
+        return;
+      }
+
+      setLoading(true);
+      try {
+        showToast(`Uploading ${aboutImagesList.length} image(s) to Cloudinary...`, 'success');
+        for (let i = 0; i < aboutImagesList.length; i++) {
+          const file = aboutImagesList[i];
+          const uploadResult = await uploadToCloudinary(file);
+          const aboutCarouselRef = ref(db, 'aboutCarousel');
+          const newItemRef = push(aboutCarouselRef);
+          await set(newItemRef, {
+            id: newItemRef.key,
+            url: uploadResult.url,
+            publicId: uploadResult.publicId
+          });
+        }
+        showToast('All images uploaded successfully!');
+        setAboutImagesList([]);
+        setAboutImagePreviews([]);
+      } catch (err) {
+        console.error(err);
+        showToast(err.message || 'Failed to upload images.', 'error');
+      } finally {
+        setLoading(false);
+      }
+    }
+  };
+
+  // Tab 6: Start Edit About Image
+  const startEditAbout = (item) => {
+    setEditingAbout(item);
+    setAboutSinglePreview(item.url);
+    setAboutSingleImage(null);
+    setAboutImagesList([]);
+    setAboutImagePreviews([]);
+  };
+
+  // Tab 6: Delete About Image
+  const handleDeleteAbout = async (id, text, publicId) => {
+    if (!window.confirm('Are you sure you want to delete this About image?')) return;
+
+    try {
+      if (publicId) {
+        showToast('Removing image from Cloudinary...', 'success');
+        await deleteFromCloudinary(publicId);
+      }
+      await remove(ref(db, `aboutCarousel/${id}`));
+      showToast('About image deleted.');
+      
+      if (editingAbout?.id === id) {
+        setEditingAbout(null);
+        setAboutSingleImage(null);
+        setAboutSinglePreview('');
+      }
+    } catch (err) {
+      console.error(err);
+      showToast('Failed to delete About image.', 'error');
+    }
+  };
+
   // Auth Loading Screen
   if (authLoading) {
     return (
@@ -953,13 +1119,19 @@ const AdminPanel = () => {
             className={`admin-tab-btn clickable ${activeTab === 'instagram' ? 'active' : ''}`}
             onClick={() => setActiveTab('instagram')}
           >
-            <FaInstagram /> Instagram Feed
+            <FaInstagram /> Social Feed
           </button>
           <button 
             className={`admin-tab-btn clickable ${activeTab === 'blogs' ? 'active' : ''}`}
             onClick={() => setActiveTab('blogs')}
           >
             <FaBookOpen /> Manage Blogs
+          </button>
+          <button 
+            className={`admin-tab-btn clickable ${activeTab === 'aboutCarousel' ? 'active' : ''}`}
+            onClick={() => setActiveTab('aboutCarousel')}
+          >
+            <FaImages /> About Carousel
           </button>
         </nav>
 
@@ -1347,25 +1519,25 @@ const AdminPanel = () => {
             </div>
           )}
 
-          {/* TAB 4: INSTAGRAM GALLERY */}
+          {/* TAB 4: SOCIAL FEED GALLERY */}
           {activeTab === 'instagram' && (
             <div className="admin-grid-layout">
               {/* Form */}
               <div className="glass-card admin-form-card">
-                <h3 className="admin-card-title">{editingInstagram ? 'Edit Instagram Link' : 'Add Instagram Link'}</h3>
+                <h3 className="admin-card-title">{editingInstagram ? 'Edit Social Link' : 'Add Social Link'}</h3>
                 <form onSubmit={handleInstagramSubmit}>
                   <div className="form-group">
-                    <label className="form-label">Instagram Link (Post or Reel)</label>
+                    <label className="form-label">Social Link (Instagram, LinkedIn, Facebook)</label>
                     <input 
                       type="url" 
                       className="form-control"
-                      placeholder="e.g. https://www.instagram.com/reel/C8Xy-1Jy4pD/"
+                      placeholder="e.g. Instagram reel, LinkedIn update, or Facebook post"
                       value={instagramLink}
                       onChange={(e) => setInstagramLink(e.target.value)}
                       required 
                     />
                     <small style={{ color: 'var(--text-secondary)', display: 'block', marginTop: '6px', fontSize: '0.75rem' }}>
-                      Just paste the URL of your Instagram post or reel. We will format it as an embed automatically.
+                      Just paste the URL of your Instagram post/reel, LinkedIn update post, or Facebook post/video. We will automatically format and embed it in the feed.
                     </small>
                   </div>
                   <div style={{ display: 'flex', gap: '10px' }}>
@@ -1394,42 +1566,52 @@ const AdminPanel = () => {
                 {instagramPosts.length === 0 ? (
                   <div className="empty-state">
                     <FaInstagram className="empty-state-icon" />
-                    <p>No custom posts yet. Default Instagram gallery cards will be displayed.</p>
+                    <p>No custom posts yet. Default social gallery cards will be displayed.</p>
                   </div>
                 ) : (
                   <div className="admin-items-list">
-                    {instagramPosts.map((post) => (
-                      <div key={post.id} className="admin-item-row">
-                        <div className="admin-item-info">
-                          <FaInstagram style={{ color: 'var(--color-gold)', fontSize: '1.5rem', marginRight: '10px' }} />
-                          <div className="admin-item-details">
-                            <h4 style={{ fontSize: '0.9rem' }}>Post ID: {post.id}</h4>
-                            <p style={{ fontSize: '0.75rem' }}>
-                              <a href={post.link} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--color-gold)' }}>
-                                {post.link}
-                              </a>
-                            </p>
+                    {instagramPosts.map((post) => {
+                      const isLI = post.link.includes('linkedin.com');
+                      const isFB = post.link.includes('facebook.com') || post.link.includes('fb.watch');
+                      return (
+                        <div key={post.id} className="admin-item-row">
+                          <div className="admin-item-info">
+                            {isLI ? (
+                              <FaLinkedin style={{ color: '#0A66C2', fontSize: '1.5rem', marginRight: '10px' }} />
+                            ) : isFB ? (
+                              <FaFacebook style={{ color: '#1877F2', fontSize: '1.5rem', marginRight: '10px' }} />
+                            ) : (
+                              <FaInstagram style={{ color: 'var(--color-gold)', fontSize: '1.5rem', marginRight: '10px' }} />
+                            )}
+                            <div className="admin-item-details">
+                              <h4 style={{ fontSize: '0.9rem' }}>Post ID: {post.id}</h4>
+                              <p style={{ fontSize: '0.75rem' }}>
+                                <a href={post.link} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--color-gold)' }}>
+                                  {post.link}
+                                </a>
+                              </p>
+                            </div>
+                          </div>
+                          <div style={{ display: 'flex', gap: '8px' }}>
+                            <button 
+                              className="btn-delete" 
+                              style={{ background: 'rgba(212, 175, 55, 0.1)', color: 'var(--color-gold)', border: '1px solid rgba(212, 175, 55, 0.2)' }}
+                              onClick={() => startEditInstagram(post)}
+                              title="Edit Social Link"
+                            >
+                              <FaEdit />
+                            </button>
+                            <button 
+                              className="btn-delete" 
+                              onClick={() => handleDeleteInstagram(post.id)}
+                              title="Delete Social Link"
+                            >
+                              <FaTrash />
+                            </button>
                           </div>
                         </div>
-                        <div style={{ display: 'flex', gap: '8px' }}>
-                          <button 
-                            className="btn-delete" 
-                            style={{ background: 'rgba(212, 175, 55, 0.1)', color: 'var(--color-gold)', border: '1px solid rgba(212, 175, 55, 0.2)' }}
-                            onClick={() => startEditInstagram(post)}
-                            title="Edit Instagram Link"
-                          >
-                            <FaEdit />
-                          </button>
-                          <button 
-                            className="btn-delete" 
-                            onClick={() => handleDeleteInstagram(post.id)}
-                            title="Delete Instagram link"
-                          >
-                            <FaTrash />
-                          </button>
-                        </div>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 )}
               </div>
@@ -1622,6 +1804,154 @@ const AdminPanel = () => {
                             className="btn-delete" 
                             onClick={() => handleDeleteBlog(blog.id, blog.title, blog.publicId)}
                             title="Delete Blog"
+                          >
+                            <FaTrash />
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* TAB 6: ABOUT CAROUSEL */}
+          {activeTab === 'aboutCarousel' && (
+            <div className="admin-grid-layout">
+              {/* Form */}
+              <div className="glass-card admin-form-card">
+                <h3 className="admin-card-title">
+                  {editingAbout ? 'Edit About Image' : 'Upload About Images'}
+                </h3>
+                <form onSubmit={handleAboutSubmit}>
+                  {editingAbout ? (
+                    // Edit Mode: Single image replace
+                    <div className="form-group">
+                      <label className="form-label">Replacement Image *</label>
+                      {aboutSinglePreview ? (
+                        <div className="image-upload-preview">
+                          <img src={aboutSinglePreview} alt="Preview" className="preview-img" />
+                          <button 
+                            type="button" 
+                            className="remove-preview-btn clickable"
+                            onClick={() => {
+                              setAboutSingleImage(null);
+                              setAboutSinglePreview('');
+                            }}
+                          >
+                            &times;
+                          </button>
+                        </div>
+                      ) : (
+                        <label className="image-upload-preview clickable">
+                          <FaCloudUploadAlt className="upload-icon" />
+                          <span className="upload-text">Click to choose image file</span>
+                          <input 
+                            type="file" 
+                            accept="image/*" 
+                            style={{ display: 'none' }} 
+                            onChange={handleAboutImageChange}
+                            required
+                          />
+                        </label>
+                      )}
+                    </div>
+                  ) : (
+                    // Add Mode: Multiple images upload
+                    <div className="form-group">
+                      <label className="form-label">Select Images * (Multiple allowed)</label>
+                      {aboutImagePreviews.length > 0 ? (
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(80px, 1fr))', gap: '10px' }}>
+                            {aboutImagePreviews.map((url, index) => (
+                              <div key={index} className="image-upload-preview" style={{ height: '80px', width: '80px', margin: 0 }}>
+                                <img src={url} alt={`Preview ${index + 1}`} className="preview-img" />
+                              </div>
+                            ))}
+                          </div>
+                          <button 
+                            type="button" 
+                            className="btn btn-outline btn-xs clickable"
+                            style={{ padding: '4px 10px', fontSize: '0.75rem', alignSelf: 'flex-start' }}
+                            onClick={() => {
+                              setAboutImagesList([]);
+                              setAboutImagePreviews([]);
+                            }}
+                          >
+                            Clear Selection
+                          </button>
+                        </div>
+                      ) : (
+                        <label className="image-upload-preview clickable">
+                          <FaCloudUploadAlt className="upload-icon" />
+                          <span className="upload-text">Click to choose files (hold Ctrl to select multiple)</span>
+                          <input 
+                            type="file" 
+                            accept="image/*" 
+                            multiple
+                            style={{ display: 'none' }} 
+                            onChange={handleAboutImageChange}
+                            required
+                          />
+                        </label>
+                      )}
+                    </div>
+                  )}
+
+                  <div style={{ display: 'flex', gap: '10px' }}>
+                    <button type="submit" className="btn btn-gold btn-sm clickable" disabled={loading}>
+                      {loading ? <span className="spinner"></span> : (editingAbout ? 'Update Image' : 'Upload Images')}
+                    </button>
+                    {editingAbout && (
+                      <button 
+                        type="button" 
+                        className="btn btn-outline btn-sm clickable" 
+                        onClick={() => {
+                          setEditingAbout(null);
+                          setAboutSingleImage(null);
+                          setAboutSinglePreview('');
+                        }}
+                      >
+                        Cancel
+                      </button>
+                    )}
+                  </div>
+                </form>
+              </div>
+
+              {/* List */}
+              <div className="glass-card admin-list-card">
+                <h3 className="admin-card-title">Manage About Images ({aboutCarousel.length})</h3>
+                {aboutCarousel.length === 0 ? (
+                  <div className="empty-state">
+                    <FaImages className="empty-state-icon" />
+                    <p>No custom About images yet. Local default images are active.</p>
+                  </div>
+                ) : (
+                  <div className="admin-items-list">
+                    {aboutCarousel.map((item, index) => (
+                      <div key={item.id} className="admin-item-row">
+                        <div className="admin-item-info">
+                          <img src={item.url} alt={`About slide ${index + 1}`} className="admin-item-thumbnail" />
+                          <div className="admin-item-details">
+                            <h4>Image #{index + 1}</h4>
+                            <p style={{ wordBreak: 'break-all', fontSize: '0.75rem', color: 'var(--text-secondary)' }}>{item.url}</p>
+                          </div>
+                        </div>
+                        <div style={{ display: 'flex', gap: '8px' }}>
+                          <button 
+                            className="btn-delete" 
+                            style={{ background: 'rgba(212, 175, 55, 0.1)', color: 'var(--color-gold)', border: '1px solid rgba(212, 175, 55, 0.2)' }}
+                            onClick={() => startEditAbout(item)}
+                            title="Edit Item"
+                          >
+                            <FaEdit />
+                          </button>
+                          <button 
+                            className="btn-delete" 
+                            onClick={() => handleDeleteAbout(item.id, '', item.publicId)}
+                            title="Delete Item"
                           >
                             <FaTrash />
                           </button>

@@ -134,6 +134,23 @@
   font-size: 0.95rem;
   line-height: 1.6;
   margin-bottom: 25px;
+  max-height: 120px;
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+.featured-content p::-webkit-scrollbar {
+  width: 4px;
+}
+
+.featured-content p::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 4px;
+}
+
+.featured-content p::-webkit-scrollbar-thumb {
+  background: var(--color-gold);
+  border-radius: 4px;
 }
 
 .read-more-btn {
@@ -436,11 +453,23 @@
   font-size: 0.85rem;
   line-height: 1.6;
   margin-bottom: 20px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
+  max-height: 90px;
+  overflow-y: auto;
+  padding-right: 6px;
+}
+
+.blog-card-body p::-webkit-scrollbar {
+  width: 4px;
+}
+
+.blog-card-body p::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 4px;
+}
+
+.blog-card-body p::-webkit-scrollbar-thumb {
+  background: var(--color-gold);
+  border-radius: 4px;
 }
 
 .blog-card-footer {

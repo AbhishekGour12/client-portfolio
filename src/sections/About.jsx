@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaCheckCircle, FaGlobe, FaTimes } from 'react-icons/fa';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Autoplay, EffectFade } from 'swiper/modules';
+import { ref, onValue } from 'firebase/database';
+import { db } from '../firebase';
 
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -22,6 +24,26 @@ const aboutImages = [
 
 const About = () => {
   const [activeMilestone, setActiveMilestone] = useState(null);
+  const [carouselItems, setCarouselItems] = useState([]);
+
+  useEffect(() => {
+    const aboutRef = ref(db, 'aboutCarousel');
+    const unsub = onValue(aboutRef, (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        const list = Object.keys(data).map(key => data[key]);
+        setCarouselItems(list);
+      } else {
+        // Fallback to default aboutImages as objects
+        setCarouselItems(aboutImages.map((url, idx) => ({
+          id: `default-${idx}`,
+          url,
+          text: `Anushi Kothari Anchor ${idx + 1}`
+        })));
+      }
+    });
+    return () => unsub();
+  }, []);
 
   const timelineMilestones = [
     {
@@ -135,16 +157,16 @@ const About = () => {
               autoplay={{ delay: 2000, disableOnInteraction: false }}
               className="about-swiper"
             >
-              {aboutImages.map((imgSrc, idx) => (
-                <SwiperSlide key={idx}>
+              {carouselItems.map((item, idx) => (
+                <SwiperSlide key={item.id || idx}>
                   <div className="about-slide-inner">
                     <div
                       className="about-slide-bg"
-                      style={{ backgroundImage: `url(${imgSrc})` }}
+                      style={{ backgroundImage: `url(${item.url})` }}
                     />
                     <img
-                      src={imgSrc}
-                      alt={`Anushi Kothari Anchor ${idx + 1}`}
+                      src={item.url}
+                      alt={item.text || `Anushi Kothari Anchor ${idx + 1}`}
                       className="about-image"
                       loading="lazy"
                       decoding="async"

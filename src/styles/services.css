@@ -52,6 +52,23 @@
   line-height: 1.7;
   color: var(--text-secondary);
   margin-bottom: 25px;
+  max-height: 80px;
+  overflow-y: auto;
+  padding-right: 6px;
+}
+
+.service-card-desc::-webkit-scrollbar {
+  width: 4px;
+}
+
+.service-card-desc::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 4px;
+}
+
+.service-card-desc::-webkit-scrollbar-thumb {
+  background: var(--color-gold);
+  border-radius: 4px;
 }
 
 .service-learn-more-btn {
@@ -160,6 +177,23 @@
   line-height: 1.8;
   color: var(--text-secondary);
   margin-bottom: 25px;
+  max-height: 150px;
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+.service-long-desc::-webkit-scrollbar {
+  width: 4px;
+}
+
+.service-long-desc::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 4px;
+}
+
+.service-long-desc::-webkit-scrollbar-thumb {
+  background: var(--color-gold);
+  border-radius: 4px;
 }
 
 .service-modal-benefits h4 {

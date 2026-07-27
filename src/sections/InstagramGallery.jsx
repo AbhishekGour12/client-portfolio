@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaHeart, FaComment, FaInstagram } from 'react-icons/fa';
+import { FaHeart, FaComment, FaInstagram, FaLinkedin, FaFacebook } from 'react-icons/fa';
 import { ref, onValue } from 'firebase/database';
 import { db } from '../firebase';
 import '../styles/instagram.css';
@@ -51,6 +51,15 @@ const defaultInstagramPosts = [
   }
 ];
 
+// Utility to detect social platform
+const detectPlatform = (link) => {
+  if (!link) return 'instagram';
+  const cleanLink = link.toLowerCase();
+  if (cleanLink.includes('linkedin.com')) return 'linkedin';
+  if (cleanLink.includes('facebook.com') || cleanLink.includes('fb.watch')) return 'facebook';
+  return 'instagram';
+};
+
 // Utility to convert Instagram post/reel link to embed URL
 const getInstagramEmbedUrl = (link) => {
   if (!link) return '';
@@ -58,7 +67,42 @@ const getInstagramEmbedUrl = (link) => {
   if (cleanLink.endsWith('/')) {
     cleanLink = cleanLink.slice(0, -1);
   }
-  return `${cleanLink}/embed/`;
+  return `${cleanLink}/embed`;
+};
+
+// Utility to convert LinkedIn post link to embed URL
+const getLinkedInEmbedUrl = (link) => {
+  if (!link) return '';
+  
+  // Try to find the URN pattern with prefixes like activity, share, ugcPost
+  const urnMatch = link.match(/(activity|share|ugcPost)[-:](\d+)/i);
+  if (urnMatch) {
+    const type = urnMatch[1].toLowerCase();
+    const id = urnMatch[2];
+    const urnType = type === 'ugcpost' ? 'ugcPost' : type;
+    return `https://www.linkedin.com/embed/feed/update/urn:li:${urnType}:${id}`;
+  }
+  
+  // Fallback if we only found digits but no prefix
+  const digitMatch = link.match(/\d{18,20}/);
+  if (digitMatch) {
+    const id = digitMatch[0];
+    if (link.includes('/posts/')) {
+      // User updates in feed are mostly activity URNs
+      return `https://www.linkedin.com/embed/feed/update/urn:li:activity:${id}`;
+    }
+    return `https://www.linkedin.com/embed/feed/update/urn:li:share:${id}`;
+  }
+  
+  return '';
+};
+
+// Utility to convert Facebook post link to embed URL
+const getFacebookEmbedUrl = (link) => {
+  if (!link) return '';
+  const isVideo = link.includes('/videos/') || link.includes('/watch/') || link.includes('/reels/') || link.includes('fb.watch');
+  const plugin = isVideo ? 'video.php' : 'post.php';
+  return `https://www.facebook.com/plugins/${plugin}?href=${encodeURIComponent(link)}&show_text=false&width=500`;
 };
 
 const InstagramGallery = () => {
@@ -88,71 +132,94 @@ const InstagramGallery = () => {
   const displayPosts = posts.length > 0 ? posts : defaultInstagramPosts;
   const slicedPosts = displayPosts.slice(0, visibleCount);
 
-  // Trigger Instagram embed processing when posts change
-  useEffect(() => {
-    const scriptId = 'instagram-embed-script';
-    let script = document.getElementById(scriptId);
-
-    if (!script) {
-      script = document.createElement('script');
-      script.id = scriptId;
-      script.src = 'https://www.instagram.com/embed.js';
-      script.async = true;
-      script.defer = true;
-      document.body.appendChild(script);
-      script.onload = () => {
-        if (window.instgrm) {
-          window.instgrm.Embeds.process();
-        }
-      };
-    } else {
-      if (window.instgrm) {
-        window.instgrm.Embeds.process();
-      }
-    }
-  }, [slicedPosts]);
-
   return (
     <section className="section instagram-section">
       <div className="bg-glow-blob blob-purple instagram-blob" />
 
       <div className="section-title-wrapper">
         <span className="section-subtitle">Social Feed</span>
-        <h2 className="section-title">Follow @anushi_kothari</h2>
+        <h2 className="section-title">Follow My Journey</h2>
       </div>
 
       <div className="instagram-grid">
         <AnimatePresence mode="popLayout">
           {slicedPosts.map((post, index) => {
             if (post.isFirebase) {
-              // Native Instagram Embed Blockquote (no height constraint)
-              return (
-                <motion.div
-                  key={post.id}
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.95 }}
-                  transition={{ duration: 0.5, delay: (index % 6) * 0.05 }}
-                  className="instagram-item glass-card"
-                  style={{ 
-                    padding: 0, 
-                    background: 'rgba(16, 27, 46, 0.4)',
-                    overflow: 'visible'
-                  }}
-                >
-                  <blockquote 
-                    className="instagram-media" 
-                    data-instgrm-permalink={post.link} 
-                    data-instgrm-version="14"
-                    style={{ background: 'transparent', border: 'none', margin: '0', width: '100%' }}
+              const platform = detectPlatform(post.link);
+              if (platform === 'instagram') {
+                return (
+                  <motion.div
+                    key={post.id}
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    transition={{ duration: 0.5, delay: (index % 6) * 0.05 }}
+                    className="instagram-item social-embed-card"
                   >
-                    <a href={post.link} target="_blank" rel="noopener noreferrer" style={{ display: 'block', padding: '40px', color: 'var(--color-gold)', textAlign: 'center', fontFamily: 'var(--font-alt)', textDecoration: 'none' }}>
-                      <FaInstagram style={{ fontSize: '2rem', marginBottom: '10px' }} />
-                      <span style={{ display: 'block' }}>Loading Instagram Reel...</span>
-                    </a>
-                  </blockquote>
-                </motion.div>
-              );
+                    <iframe
+                      src={getInstagramEmbedUrl(post.link)}
+                      title="Instagram Embed"
+                      allowtransparency="true"
+                      allowFullScreen={true}
+                      frameBorder="0"
+                      scrolling="no"
+                      style={{ width: '100%', height: '480px', border: 'none', background: 'transparent' }}
+                    />
+                  </motion.div>
+                );
+              } else if (platform === 'linkedin') {
+                const embedUrl = getLinkedInEmbedUrl(post.link);
+                return (
+                  <motion.div
+                    key={post.id}
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    transition={{ duration: 0.5, delay: (index % 6) * 0.05 }}
+                    className="instagram-item social-embed-card"
+                  >
+                    {embedUrl ? (
+                      <iframe
+                        src={embedUrl}
+                        title="LinkedIn Embed"
+                        frameBorder="0"
+                        allowFullScreen={true}
+                        style={{ width: '100%', height: '550px', border: 'none', background: 'transparent' }}
+                      />
+                    ) : (
+                      <div className="embed-error">
+                        <FaLinkedin style={{ fontSize: '2rem', color: '#0A66C2', marginBottom: '10px' }} />
+                        <p>LinkedIn Share Post</p>
+                        <a href={post.link} target="_blank" rel="noopener noreferrer" className="btn btn-sm btn-outline">
+                          View Post
+                        </a>
+                      </div>
+                    )}
+                  </motion.div>
+                );
+              } else if (platform === 'facebook') {
+                return (
+                  <motion.div
+                    key={post.id}
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    transition={{ duration: 0.5, delay: (index % 6) * 0.05 }}
+                    className="instagram-item social-embed-card"
+                  >
+                    <iframe
+                      src={getFacebookEmbedUrl(post.link)}
+                      title="Facebook Embed"
+                      scrolling="no"
+                      frameBorder="0"
+                      allowFullScreen={true}
+                      allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                      style={{ width: '100%', height: '500px', border: 'none', background: 'transparent' }}
+                    />
+                  </motion.div>
+                );
+              }
+              return null;
             } else {
               // Default Unsplash fallbacks
               return (
@@ -196,7 +263,7 @@ const InstagramGallery = () => {
         </div>
       )}
 
-      <div className="instagram-cta-wrapper">
+      <div className="instagram-cta-wrapper" style={{ gap: '15px', flexWrap: 'wrap' }}>
         <a
           href="https://instagram.com/anushi_kothari"
           target="_blank"
@@ -204,6 +271,15 @@ const InstagramGallery = () => {
           className="btn btn-outline instagram-cta-btn clickable"
         >
           <FaInstagram /> View More On Instagram
+        </a>
+        <a
+          href="https://www.linkedin.com/in/anushi-kothari-049821214/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn btn-outline instagram-cta-btn clickable"
+          style={{ borderColor: 'rgba(10, 102, 194, 0.4)', color: 'var(--text-primary)' }}
+        >
+          <FaLinkedin style={{ color: '#0A66C2' }} /> View More On LinkedIn
         </a>
       </div>
     </section>

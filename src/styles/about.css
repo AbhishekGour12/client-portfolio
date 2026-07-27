@@ -309,12 +309,23 @@
   color: var(--text-secondary);
   line-height: 1.6;
   margin-bottom: 15px;
-  /* Truncate text cleanly to 4 lines using webkit clamp */
-  display: -webkit-box;
-  -webkit-line-clamp: 4;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  max-height: 95px;
+  overflow-y: auto;
+  padding-right: 6px;
+}
+
+.milestone-card-desc::-webkit-scrollbar {
+  width: 4px;
+}
+
+.milestone-card-desc::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 4px;
+}
+
+.milestone-card-desc::-webkit-scrollbar-thumb {
+  background: var(--color-gold);
+  border-radius: 4px;
 }
 
 .milestone-more-btn {
@@ -352,6 +363,8 @@
 .milestone-modal-content {
   max-width: 550px;
   width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
   padding: 35px;
   background: var(--bg-secondary);
   border: 1px solid var(--color-border-glow);

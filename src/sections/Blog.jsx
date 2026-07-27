@@ -62,7 +62,16 @@ const Blog = () => {
 
   const handleNewsletterSubmit = (e) => {
     e.preventDefault();
-    if (!email.trim()) return;
+    const subscriberEmail = email.trim();
+    if (!subscriberEmail) return;
+
+    // Open user's mail client with pre-filled details
+    const recipient = 'anchoranushi@gmail.com';
+    const subject = encodeURIComponent('Newsletter Subscription Request');
+    const body = encodeURIComponent(`Hello Anushi,\n\nI would like to subscribe to your newsletter.\n\nMy email address: ${subscriberEmail}\n\nThank you!`);
+    
+    window.location.href = `mailto:${recipient}?subject=${subject}&body=${body}`;
+
     setNewsletterSubscribed(true);
     setEmail('');
     setTimeout(() => {
