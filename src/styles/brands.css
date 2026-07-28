@@ -34,11 +34,12 @@
 .brand-logo-item {
   display: flex;
   align-items: center;
-  gap: 20px;
-  opacity: 0.75; /* significantly higher base visibility */
+  gap: 0;
+  opacity: 0.75;
+  /* significantly higher base visibility */
   transition: all 0.4s ease;
   white-space: nowrap;
-  padding: 10px 24px;
+  padding: 10px 0;
 }
 
 .brand-logo-item:hover {
@@ -47,10 +48,12 @@
 }
 
 .brand-logo-img {
-  height: 48px; /* larger logo size */
-  max-width: 140px;
+  height: 70px;
+  /* larger logo size */
+  max-width: 180px;
   object-fit: contain;
-  filter: none; /* original colors directly */
+  filter: none;
+  /* original colors directly */
   transition: all 0.4s ease;
 }
 
@@ -60,7 +63,8 @@
 
 .brand-logo-name {
   font-family: var(--font-alt);
-  font-size: 1.15rem; /* larger brand text */
+  font-size: 1.15rem;
+  /* larger brand text */
   font-weight: 500;
   color: var(--text-secondary);
   letter-spacing: 0.12em;
@@ -74,17 +78,17 @@
 
 @media (max-width: 768px) {
   .brand-logo-img {
-    height: 32px;
-    max-width: 100px;
+    height: 50px;
+    max-width: 140px;
   }
-  
+
   .brand-logo-name {
     font-size: 0.95rem;
   }
-  
+
   .brand-logo-item {
-    gap: 12px;
-    padding: 6px 12px;
+    gap: 0;
+    padding: 6px 0;
     opacity: 0.8;
   }
 }

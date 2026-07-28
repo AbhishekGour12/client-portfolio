@@ -19,7 +19,7 @@ const About = lazy(() => import('./sections/About'));
 const Statistics = lazy(() => import('./sections/Statistics'));
 const Services = lazy(() => import('./sections/Services'));
 const Portfolio = lazy(() => import('./sections/Portfolio'));
-const Showreel = lazy(() => import('./sections/Showreel'));
+
 const Testimonials = lazy(() => import('./sections/Testimonials'));
 const Brands = lazy(() => import('./sections/Brands'));
 const InstagramGallery = lazy(() => import('./sections/InstagramGallery'));
@@ -45,9 +45,8 @@ const HomeView = () => (
     <Hero />
     <About />
     <Statistics />
-    <Services />
     <Portfolio />
-    <Showreel />
+    <Services />
     <Testimonials />
     <Brands />
     <InstagramGallery />

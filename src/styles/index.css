@@ -51,7 +51,12 @@ body {
 }
 
 /* Typography Hierarchy */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-headings);
   font-weight: 700;
   letter-spacing: 0.05em;
@@ -276,22 +281,35 @@ p {
   width: 100%;
 }
 
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 45s linear infinite;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+
+}
+
 .marquee-content {
   flex-shrink: 0;
   display: flex;
   justify-content: space-around;
+
   min-width: 100%;
-  gap: 60px;
-  padding-right: 60px;
-  animation: marquee 85s linear infinite;
-  will-change: transform;
-  transform: translate3d(0, 0, 0);
-  backface-visibility: hidden;
+  gap: 20px;
+  padding-right: 20px;
+
 }
 
-@keyframes marquee {
-  0% { transform: translate3d(0, 0, 0); }
-  100% { transform: translate3d(-100%, 0, 0); }
+@keyframes marquee-scroll {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
 }
 
 /* Luxury Intro Preloader */
@@ -408,4 +426,3 @@ textarea:focus-visible {
   outline: 2px solid var(--color-gold) !important;
   outline-offset: 3px !important;
 }
-

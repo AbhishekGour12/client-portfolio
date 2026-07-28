@@ -11,40 +11,42 @@ const Brands = () => {
       </div>
 
       <div className="marquee-container">
-        <div className="marquee-content">
-          {brandsData.map((brand, index) => (
-            <div key={`${brand.id}-1-${index}`} className="brand-logo-item clickable">
-              {brand.image && (
-                <img 
-                  src={brand.image} 
-                  alt={`${brand.name} logo`} 
-                  className="brand-logo-img" 
-                  onError={(e) => {
-                    e.target.style.display = 'none';
-                  }}
-                />
-              )}
-              <span className="brand-logo-name">{brand.name}</span>
-            </div>
-          ))}
-        </div>
+        <div className="marquee-track">
+          <div className="marquee-content">
+            {brandsData.map((brand, index) => (
+              <div key={`${brand.id}-1-${index}`} className="brand-logo-item clickable">
+                {brand.image && (
+                  <img
+                    src={brand.image}
+                    alt={`${brand.name} logo`}
+                    className="brand-logo-img"
+                    onError={(e) => {
+                      e.target.style.display = 'none';
+                    }}
+                  />
+                )}
 
-        <div className="marquee-content" aria-hidden="true">
-          {brandsData.map((brand, index) => (
-            <div key={`${brand.id}-2-${index}`} className="brand-logo-item clickable">
-              {brand.image && (
-                <img 
-                  src={brand.image} 
-                  alt={`${brand.name} logo`} 
-                  className="brand-logo-img" 
-                  onError={(e) => {
-                    e.target.style.display = 'none';
-                  }}
-                />
-              )}
-              <span className="brand-logo-name">{brand.name}</span>
-            </div>
-          ))}
+              </div>
+            ))}
+          </div>
+
+          <div className="marquee-content" aria-hidden="true">
+            {brandsData.map((brand, index) => (
+              <div key={`${brand.id}-2-${index}`} className="brand-logo-item clickable">
+                {brand.image && (
+                  <img
+                    src={brand.image}
+                    alt={`${brand.name} logo`}
+                    className="brand-logo-img"
+                    onError={(e) => {
+                      e.target.style.display = 'none';
+                    }}
+                  />
+                )}
+
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
