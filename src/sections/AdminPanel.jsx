@@ -1022,7 +1022,7 @@ const AdminPanel = () => {
                   <input
                     type="email"
                     className="form-control"
-                    placeholder="admin@example.com"
+                    placeholder="anchoranushikothari@gmail.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
