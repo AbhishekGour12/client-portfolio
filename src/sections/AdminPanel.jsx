@@ -119,18 +119,23 @@ const AdminPanel = () => {
 
   // Set up Firebase Auth state listener and local admin session
   useEffect(() => {
-    const savedAdmin = localStorage.getItem('admin_auth');
-    if (savedAdmin) {
-      try {
+    try {
+      const savedAdmin = localStorage.getItem('admin_auth');
+      if (savedAdmin) {
         setUser(JSON.parse(savedAdmin));
-      } catch (e) {
-        console.error(e);
+        setAuthLoading(false);
+        return;
       }
+    } catch (e) {
+      console.error('Error parsing admin session:', e);
     }
 
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
-        setUser(currentUser);
+        setUser({
+          email: currentUser.email,
+          uid: currentUser.uid
+        });
       }
       setAuthLoading(false);
     });
@@ -258,7 +263,7 @@ const AdminPanel = () => {
     }, 4000);
   };
 
-  // Auth Submit Action
+  // Auth Submit Action (Direct Database Authentication via adminProfile)
   const handleAuthSubmit = async (e) => {
     e.preventDefault();
     setAuthError('');
@@ -267,42 +272,63 @@ const AdminPanel = () => {
       return;
     }
 
+    setLoading(true);
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      showToast('Welcome back, Admin!');
-    } catch (err) {
-      console.warn('Firebase Auth sign-in failed, checking database admin credentials...', err.code);
+      // 1. Direct verify against Firebase Realtime Database (/adminProfile)
+      const profileSnap = await get(ref(db, 'adminProfile'));
+      const profile = profileSnap.val();
 
-      // Check database /adminProfile credentials fallback
-      try {
-        const profileSnap = await get(ref(db, 'adminProfile'));
-        const profile = profileSnap.val();
-        if (
-          profile &&
-          profile.email &&
-          profile.email.toLowerCase() === email.trim().toLowerCase() &&
-          profile.password === password
-        ) {
-          const adminUser = {
+      const inputEmail = email.trim().toLowerCase();
+      const inputPass = password.trim();
+
+      if (profile) {
+        const dbEmail = (profile.email || '').trim().toLowerCase();
+        const dbPass = (profile.password || '').toString().trim();
+
+        if (inputEmail === dbEmail && inputPass === dbPass) {
+          const adminSession = {
             email: profile.email,
+            role: profile.role || 'administrator',
             uid: profile.uid || 'admin'
           };
-          localStorage.setItem('admin_auth', JSON.stringify(adminUser));
-          setUser(adminUser);
+          localStorage.setItem('admin_auth', JSON.stringify(adminSession));
+          setUser(adminSession);
           showToast('Welcome back, Admin!');
           return;
         }
-      } catch (dbErr) {
-        console.error('Database auth check error:', dbErr);
       }
 
-      if (err.code === 'auth/configuration-not-found') {
-        setAuthError('Email/Password Sign-in provider is disabled in Firebase. Please enable it in your Firebase Console under Authentication > Sign-in method.');
-      } else if (err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password' || err.code === 'auth/invalid-credential') {
+      // 2. Fallback to Firebase Auth in case needed
+      try {
+        const userCredential = await signInWithEmailAndPassword(auth, email.trim(), password);
+        const adminSession = {
+          email: userCredential.user.email,
+          uid: userCredential.user.uid
+        };
+        localStorage.setItem('admin_auth', JSON.stringify(adminSession));
+        setUser(adminSession);
+        showToast('Welcome back, Admin!');
+      } catch (authErr) {
+        console.warn('Firebase Auth fallback rejected:', authErr.code);
         setAuthError('Invalid email or password.');
-      } else {
-        setAuthError(err.message || 'Authentication failed.');
       }
+    } catch (err) {
+      console.error('Database auth error:', err);
+      // If RTDB read failed, attempt Firebase Auth as last resort
+      try {
+        const userCredential = await signInWithEmailAndPassword(auth, email.trim(), password);
+        const adminSession = {
+          email: userCredential.user.email,
+          uid: userCredential.user.uid
+        };
+        localStorage.setItem('admin_auth', JSON.stringify(adminSession));
+        setUser(adminSession);
+        showToast('Welcome back, Admin!');
+      } catch (authErr) {
+        setAuthError('Invalid email or password.');
+      }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -311,7 +337,7 @@ const AdminPanel = () => {
     try {
       localStorage.removeItem('admin_auth');
       setUser(null);
-      await signOut(auth);
+      await signOut(auth).catch(() => {});
       showToast('Logged out successfully.');
     } catch (err) {
       console.error(err);
@@ -1085,16 +1111,15 @@ const AdminPanel = () => {
                   type="submit" 
                   className="btn btn-gold clickable" 
                   style={{ width: '100%', marginTop: '10px' }}
+                  disabled={loading}
                 >
-                  <FaLock /> Sign In
+                  {loading ? 'Signing In...' : <><FaLock /> Sign In</>}
                 </button>
               </form>
 
               <div style={{ marginTop: '20px', fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: '1.4' }}>
-                <p style={{ marginBottom: '8px', color: 'var(--color-gold)' }}><strong>How to access:</strong></p>
-                <p>1. Open your Firebase Console under <strong>Authentication &gt; Sign-in method</strong>.</p>
-                <p style={{ marginTop: '4px' }}>2. Enable the <strong>Email/Password</strong> provider.</p>
-                <p style={{ marginTop: '4px' }}>3. Go to the <strong>Users</strong> tab and click <strong>Add user</strong> to configure your admin email and password.</p>
+                <p style={{ marginBottom: '8px', color: 'var(--color-gold)' }}><strong>Admin Access:</strong></p>
+                <p>Authenticates directly with Firebase Database credentials (<code>adminProfile</code>).</p>
               </div>
             </div>
           </div>
