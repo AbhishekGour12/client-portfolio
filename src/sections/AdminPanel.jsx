@@ -11,7 +11,8 @@ import {
   push, 
   remove, 
   onValue,
-  update
+  update,
+  get
 } from 'firebase/database';
 import { auth, db } from '../firebase';
 import { 
@@ -116,10 +117,21 @@ const AdminPanel = () => {
   const [aboutSinglePreview, setAboutSinglePreview] = useState(''); // Single preview URL for editing
   const [editingAbout, setEditingAbout] = useState(null); // { id, url, publicId }
 
-  // Set up Firebase Auth state listener
+  // Set up Firebase Auth state listener and local admin session
   useEffect(() => {
+    const savedAdmin = localStorage.getItem('admin_auth');
+    if (savedAdmin) {
+      try {
+        setUser(JSON.parse(savedAdmin));
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
+      if (currentUser) {
+        setUser(currentUser);
+      }
       setAuthLoading(false);
     });
     return () => unsubscribe();
@@ -259,7 +271,31 @@ const AdminPanel = () => {
       await signInWithEmailAndPassword(auth, email, password);
       showToast('Welcome back, Admin!');
     } catch (err) {
-      console.error(err);
+      console.warn('Firebase Auth sign-in failed, checking database admin credentials...', err.code);
+
+      // Check database /adminProfile credentials fallback
+      try {
+        const profileSnap = await get(ref(db, 'adminProfile'));
+        const profile = profileSnap.val();
+        if (
+          profile &&
+          profile.email &&
+          profile.email.toLowerCase() === email.trim().toLowerCase() &&
+          profile.password === password
+        ) {
+          const adminUser = {
+            email: profile.email,
+            uid: profile.uid || 'admin'
+          };
+          localStorage.setItem('admin_auth', JSON.stringify(adminUser));
+          setUser(adminUser);
+          showToast('Welcome back, Admin!');
+          return;
+        }
+      } catch (dbErr) {
+        console.error('Database auth check error:', dbErr);
+      }
+
       if (err.code === 'auth/configuration-not-found') {
         setAuthError('Email/Password Sign-in provider is disabled in Firebase. Please enable it in your Firebase Console under Authentication > Sign-in method.');
       } else if (err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password' || err.code === 'auth/invalid-credential') {
@@ -273,10 +309,14 @@ const AdminPanel = () => {
   // Sign out
   const handleSignOut = async () => {
     try {
+      localStorage.removeItem('admin_auth');
+      setUser(null);
       await signOut(auth);
       showToast('Logged out successfully.');
     } catch (err) {
       console.error(err);
+      localStorage.removeItem('admin_auth');
+      setUser(null);
     }
   };
 
